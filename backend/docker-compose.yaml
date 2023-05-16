@@ -1,0 +1,38 @@
+services:
+  # backend:
+  #   build: .
+  #   container_name: backend
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - DEBUG=1
+  #     - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1
+  #     - CELERY_BROKER=redis://redis:6379/0
+  #     - CELERY_BACKEND=redis://redis:6379/0
+  #   depends_on: 
+  #     - postgres
+  #     - redis
+
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: trading-db
+
+  redis:
+    restart: unless-stopped
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+  
+  # celery:
+  #   build: .
+  #   command: celery worker --app=core --loglevel=info
+  #   depends_on:
+  #     - redis

@@ -1,0 +1,13 @@
+
+# vscode 
+.vscode
+
+# virtual environment
+venv
+
+#db
+celerybeat-schedule.db
+
+
+*/__pycache__
+*/migrations
