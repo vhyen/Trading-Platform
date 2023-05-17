@@ -1,5 +1,4 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
 import NavButton from "../../components/NavButton";
 
 export default function NavBar() {
@@ -49,13 +48,16 @@ export default function NavBar() {
               <img src="logo.png" alt="Logo" style={{ height: "100%" }} />
             </Button>
           </Col>
+          <Col className="h-100">
           {NavList.map((nav: any) => {
             return (
-                <Col>
-                <NavButton text={nav.text} to={nav.to} />
-                </Col>
+                
+                <NavButton key={nav.id} text={nav.text} to={nav.to} />
             );
           })}
+          </Col>
+          <Col sm={3}><div className="border">Search box</div></Col>
+          <Col sm={2}>Login</Col>
         </Row>
       </Container>
     </>

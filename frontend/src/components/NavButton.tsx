@@ -1,23 +1,25 @@
 import { NavLink } from "react-router-dom";
+import { Color } from "../constants/Color";
 
 export default function NavButton({ text, to }: any) {
   return (
     <NavLink
       className={({ isActive }) =>
-        isActive ? "border-bottom border-3 border-primary" : ""
+        isActive ? "px-3 border-bottom border-3 border-primary d-inline-flex align-items-center" : "px-3 d-inline-flex align-items-center"
       }
       to={to}
       style={({ isActive }) => {
         return {
           textDecoration: "none",
-          fontWeight: isActive ? "bold" : "",
-          color: isActive ? "red" : "black",
-          paddingTop:"25px",
-          height:"100%"
+          display:"inline-block",
+          fontWeight: "bold",
+          color: isActive ? "black" : `${Color.muted}`,
+          height:"100%",
+          
         };
       }}
     >
-      {text}
+        <div>{text}</div>
     </NavLink>
   );
 }
