@@ -1,6 +1,9 @@
+from rest_framework import serializers
 
+from order.models import SellOrder
 
 
 class SellOrderSerializer(serializers.ModelSerializer):
-    pass
-    
+    class Meta:
+        model = SellOrder
+        fields = '__all__'

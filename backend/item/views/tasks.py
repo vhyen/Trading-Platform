@@ -1,9 +1,10 @@
 from celery import Celery, shared_task
 from celery.schedules import crontab
-
+from django.http import HttpResponse
 
 app = Celery('tasks', backend='redis://127.0.0.1:6379', broker='redis://127.0.0.1:6379')
 app.conf.broker_url = 'redis: //127.0.0.1:6379/0'
+
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
@@ -19,9 +20,11 @@ def setup_periodic_tasks(sender, **kwargs):
         test.s('Happy Mondays!'),
     )
 
+
 @app.task
 def test(arg):
     print(arg)
+
 
 @app.task
 def add(x, y):
@@ -34,4 +37,8 @@ def test_func(self):
     for i in range(10):
         print(i)
     print('Done')
-    
+
+
+def test(request):
+    test_func.delay()
+    return HttpResponse("Alooooo")

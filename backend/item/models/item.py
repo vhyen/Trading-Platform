@@ -3,7 +3,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 import uuid as uuid
 
-from backend.auth.models.user import Account
+from account.models.account import Account
+
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Item(models.Model):
     supply = models.BigIntegerField(validators=[
         MinValueValidator(1),
     ])
-    current_price = models.DecimalField(decimal_places=1, blank=False, null=False)
+    current_price = models.DecimalField(max_digits=5,decimal_places=1, blank=False, null=False)
     
     # ham update price
     
