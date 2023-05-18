@@ -30,6 +30,11 @@ def test(arg):
 def add(x, y):
     z = x + y
     print(z)
+    
+
+
+@app.task
+def 
 
 
 @shared_task(bind=True)
@@ -39,6 +44,3 @@ def test_func(self):
     print('Done')
 
 
-def test(request):
-    test_func.delay()
-    return HttpResponse("Alooooo")
