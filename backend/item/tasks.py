@@ -1,6 +1,7 @@
+from django.http import HttpResponse
 from celery import Celery, shared_task
 from celery.schedules import crontab
-from django.http import HttpResponse
+from .models import Item
 
 app = Celery('tasks', backend='redis://127.0.0.1:6379', broker='redis://127.0.0.1:6379')
 app.conf.broker_url = 'redis: //127.0.0.1:6379/0'
@@ -34,7 +35,9 @@ def add(x, y):
 
 
 @app.task
-def 
+def createItem():
+    item = Item.objects.create()
+    
 
 
 @shared_task(bind=True)
