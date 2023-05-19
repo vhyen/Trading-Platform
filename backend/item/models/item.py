@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.utils.text import slugify
 import uuid as uuid
 
 from account.models.account import Account
@@ -21,5 +22,8 @@ class Item(models.Model):
     current_price = models.DecimalField(max_digits=5,decimal_places=1, blank=False, null=False)
     
     # ham update price
-    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+            super().save(*args, **kwargs)
     

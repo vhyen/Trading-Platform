@@ -7,6 +7,6 @@ router = SimpleRouter(trailing_slash=False)
 router.register(r'^item', item.ItemViewSet)
 router.register(r'^owned_item', owned_item.OwnedItemViewSet)
 urlpatterns = [
-    path('test',test_ce.test, name='test'),
+    path('',test_ce.create_item, name='test'),
 ]
 urlpatterns += router.urls

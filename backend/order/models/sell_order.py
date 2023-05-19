@@ -1,6 +1,6 @@
 from django.db import models
-import uuid as uuid
 from django.core.validators import MinValueValidator
+import uuid as uuid
 
 from account.models.account import Account
 from item.models import Item

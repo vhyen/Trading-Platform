@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'order',
     'account',
+    'order',
     'django_celery_results',
     'django_celery_beat',
     'item.apps.ItemConfig',
