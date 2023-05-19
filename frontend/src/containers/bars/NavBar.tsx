@@ -57,7 +57,7 @@ export default function NavBar() {
           })}
           </Col>
           <Col sm={3}><div className="border">Search box</div></Col>
-          <Col sm={2}>Login</Col>
+          <Col sm={2}><p className="text-end m-0 mx-3">Login</p></Col>
         </Row>
       </Container>
     </>
