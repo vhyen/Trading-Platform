@@ -1,6 +1,7 @@
 import { Container} from "react-bootstrap";
 import TotalInfo from "./TotalInfo";
 import PopularItems from "./PopularItems";
+import CarouselItem from "./CarouselItem";
 
 export default function DashBoardContent() {
   return (
@@ -8,6 +9,7 @@ export default function DashBoardContent() {
         <TotalInfo/>
         <PopularItems/>
         <div style={{height:"500px"}}></div>
+        <CarouselItem/>
     </Container>
   );
 }

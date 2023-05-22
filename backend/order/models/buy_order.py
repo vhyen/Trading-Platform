@@ -5,7 +5,10 @@ from django.core.validators import MinValueValidator
 from account.models.account import Account
 from item.models import Item
 
-
+ORDER_TYPES = [
+    ('L', 'Limit'),
+    ('M', 'Market'),
+]
 class BuyOrder(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -19,3 +22,9 @@ class BuyOrder(models.Model):
     updated_at = models.DateTimeField("Updated at", auto_now=True)
     price = models.DecimalField(max_digits=5, decimal_places=1, validators=[
                                 MinValueValidator(0.1)])
+
+    type = models.CharField(choices=ORDER_TYPES, max_length=1)
+    
+    def save(self, *args, **kwargs):
+        if self.quantity <= self.item.supply:
+            super().save(*args, **kwargs)

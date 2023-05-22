@@ -12,3 +12,4 @@ class PriceRecord(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=5,decimal_places=1, blank=False, null=False)
     item = models.ForeignKey(Item, related_name='price_record', on_delete=models.CASCADE)
+    

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { ButtonGroup } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { Color } from "../../constants/Color";
 
@@ -23,6 +23,11 @@ export default function Footer() {
     >
       <Row className="p-5 text-center justify-content-center align-items-center">
         <Col className="d-inline-flex">
+          <ul style={{
+              marginBottom: 0,
+            }}>
+
+          </ul>
           <ul
             style={{
               marginBottom: 0,

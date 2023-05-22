@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'order',
     'django_celery_results',
     'django_celery_beat',
-    'item.apps.ItemConfig',
+    'item',
+    'news',
 ]
 
 MIDDLEWARE = [
