@@ -18,7 +18,7 @@ export default function Footer() {
       fluid
       style={{
         background: `${Color.main}`,
-        color: "black",
+        color: "black"
       }}
     >
       <Row className="p-5 text-center justify-content-center align-items-center">
