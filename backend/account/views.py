@@ -12,8 +12,9 @@ def gen_account(request):
     for i in range(200):
         profile = fake.simple_profile()
         name = profile['name'].split()
-        account = Account(username=profile['username'], first_name=name[0], last_name=name[1], email=profile['mail'], password='123')
-        account.save()
+        # account = Account(username=profile['username'], first_name=name[0], last_name=name[1], email=profile['mail'], password='123')
+        # account.save()
+        Account.objects.create_user(profile['username'], profile['mail'], profile['username'], first_name=name[0], last_name=name[1], balance = random.randint(50, 500))
     return HttpResponse("OK")
 
 def gen_coin(request):

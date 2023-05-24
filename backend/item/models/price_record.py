@@ -2,7 +2,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
-from uuid import uuid
+import uuid as uuid
 from item.models.item import Item
 
 # Create your models here.

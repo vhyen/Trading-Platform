@@ -9,6 +9,8 @@ venv
 celerybeat-schedule.db
 
 
+*/migrations
+
 */__pycache__
 
 *.pyc

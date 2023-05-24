@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import NavButton from "../../components/NavButton";
 
 export default function NavBar() {
@@ -51,12 +51,17 @@ export default function NavBar() {
           <Col className="h-100">
           {NavList.map((nav: any) => {
             return (
-                
                 <NavButton key={nav.id} text={nav.text} to={nav.to} />
             );
           })}
           </Col>
-          <Col sm={3}><div className="border">Search box</div></Col>
+          <Col sm={3}>
+          <Form.Control
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+          />
+          </Col>
           <Col sm={2}><p className="text-end m-0 mx-3">Login</p></Col>
         </Row>
       </Container>

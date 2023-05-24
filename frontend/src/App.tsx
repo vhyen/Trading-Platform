@@ -1,6 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import DashBoard from './pages/DashBoard'
+import { DashBoard, ItemDetail } from './pages/index'
 
 function App() {
   return (
@@ -8,6 +8,7 @@ function App() {
         <Route path='/' element={<DashBoard/>}/>
         <Route path='/about' element={<DashBoard/>}/>
         <Route path='/wallet' element={<DashBoard/>}/>
+        <Route path='/item' element={<ItemDetail/>}/>
         <Route path='/news' element={<DashBoard/>}/>
     </Routes>
   )

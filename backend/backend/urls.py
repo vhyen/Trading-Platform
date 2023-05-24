@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('item/', include('item.urls')),
     path('order/',include('order.urls')),
-    # path('', views.gen_coin)
+    path('', views.gen_coin)
 ]
