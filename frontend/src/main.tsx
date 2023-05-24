@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'simplebar-react/dist/simplebar.min.css'
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
