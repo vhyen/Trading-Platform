@@ -17,10 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 
 from account import views
+from backend.settings import APP_ENV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('item/', include('item.urls')),
-    path('order/',include('order.urls')),
-    # path('', views.gen_coin)
 ]
+if APP_ENV == 'item':
+    urlpatterns += [path('item/', include('item.urls'))]
+
+if APP_ENV == 'order':
+    urlpatterns += [path('order/', include('order.urls'))]
+
+if APP_ENV == 'account':
+    urlpatterns += [path('account/',include('account.urls'))]
+
+if APP_ENV == 'news':
+    urlpatterns += [path('news/', include('news.urls'))]
