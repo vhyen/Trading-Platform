@@ -15,21 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from account import views
 from backend.settings import APP_ENV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
 if APP_ENV == 'item':
-    urlpatterns += [path('item/', include('item.urls'))]
+    urlpatterns += [path('', include('item.urls'))]
 
 if APP_ENV == 'order':
-    urlpatterns += [path('order/', include('order.urls'))]
+    urlpatterns += [path('', include('order.urls'))]
 
 if APP_ENV == 'account':
-    urlpatterns += [path('account/',include('account.urls'))]
+    urlpatterns += [path('',include('account.urls'))]
 
 if APP_ENV == 'news':
-    urlpatterns += [path('news/', include('news.urls'))]
+    urlpatterns += [path('', include('news.urls'))]
