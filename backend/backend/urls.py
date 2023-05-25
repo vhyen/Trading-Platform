@@ -26,7 +26,7 @@ urlpatterns = [
     path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
 if APP_ENV == 'item':
-    urlpatterns += [path('', include('item.urls'))]
+    urlpatterns += [path('item/', include('item.urls'))]
 
 if APP_ENV == 'order':
     urlpatterns += [path('', include('order.urls'))]
