@@ -1,50 +1,66 @@
-import { ScaleLinear } from "d3-scale";
 import { Color } from "../../constants/Color";
 
-const MARGIN = 2;
-
-export interface ICandle {
-  date: string;
-  day: number;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-}
-
-interface CandleProps {
-  candle: ICandle;
-  caliber: number;
-  scaleY: ScaleLinear<number, number>;
-  scaleBody: ScaleLinear<number, number>;
-  index: number;
-}
-
 export default function Candle({
-  candle: { low, high, open, close },
-  index,
-  caliber,
-  scaleY,
-  scaleBody,
-}: CandleProps) {
-  const color = (close > open) ? Color.text_green : Color.text_red;
-  const x = caliber * index + 0.5 * caliber;
+  data,
+  x,
+  candle_width,
+  pixelFor,
+  pixel_height,
+}: any) {
+  const up = data.close > data.open;
+  const bar_top = pixelFor(up ? data.open : data.close);
+  const bar_bottom = pixelFor(up ? data.close : data.open);
+  const bar_height = Math.abs(bar_top - bar_bottom);
+  const wick_top = pixelFor(data.high);
+  const wick_bottom = pixelFor(data.low);
+  const color = up ? Color.text_green : Color.text_red;
+
   return (
     <>
-      <Line
+      <line
+        stroke={Color.muted}
+        strokeOpacity="70%"
+        strokeWidth={0.4}
+        strokeDasharray={3}
         x1={x}
+        y1={0}
         x2={x}
-        y1={scaleY(high)}
-        y2={scaleY(low)}
+        y2={pixel_height - 36}
+      />
+      <rect
+        x={x - candle_width / 2}
+        y={bar_bottom}
+        width={candle_width}
+        height={bar_height}
+        fill={color}
+        stroke={color}
+      />
+      <text
+        x={x - 16}
+        y={pixel_height - 16}
+        fill={Color.text_grey}
+        color={Color.text_grey}
+        fontSize={12}
+      >
+        {data.time}
+      </text>
+
+      <line
+        stroke={color}
+        strokeWidth={1.5}
+        x1={x}
+        y1={bar_top}
+        x2={x}
+        y2={wick_top}
+      />
+
+      <line
         stroke={color}
         strokeWidth={1}
-      />
-      <Rect
-        x={caliber * index + MARGIN}
-        y={scaleY(Math.max(open, close))}
-        width={caliber}
-        height={scaleBody(Math.max(open, close) - Math.min(open, close))}
-        fill={color}
+        x1={x}
+        y1={bar_bottom}
+        x2={x}
+        y2={wick_bottom}
       />
     </>
   );

@@ -5,4 +5,6 @@ export enum Color{
     text_red="#f6465d",
     text_grey="#CCD1D9",
     text_green="#3BA500",
+    form_text_second = "#848E9C",
+    form_text_primary = "#EAECEF"
 }

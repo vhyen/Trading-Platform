@@ -1,34 +1,31 @@
 import { Col, Container, Row } from "react-bootstrap";
 import OrderBook from "../containers/item/OrderBook";
 import CandleStickChart from "../containers/item/CandleStickChart";
-
-
-const candles = data.slice(0, 20);
-const values = candles.map(candle => [candle.low, candle.high]).flat();
-const domain = [Math.min(...values), Math.max(...values)];
-const caliber = size/candles.length;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black",
-  },
-});
-const getDomain = (rows: Candle[]): [number, number] => {
-  const values = rows.map(({ high, low }) => [high, low]).flat();
-  return [Math.min(...values), Math.max(...values)];
-};
-const domain = getDomain(candles);
+import { Color } from "../constants/Color";
+import { NavBar } from "../containers/bars";
+import OrderForm from "../containers/item/OrderForm";
 
 export default function ItemDetail() {
     return (
         <>
+        <NavBar/>
         <Container fluid className="p-0">
             <Row>
                 <Col sm={3}>
                     <OrderBook/>
                 </Col>
-                <Col sm={9}>
-                    <CandleStickChart {...{candles, caliber, size, domain}}/>
+                <Col sm={9} 
+                id="colchart"
+                
+                >
+                    <Container>
+                        <Row>
+                            <CandleStickChart chartHeight={400} chartWidth={1040} highest={33288} lowest={384}/>
+                        </Row>
+                        <Row>
+                            <OrderForm />
+                        </Row>
+                    </Container>
                 </Col>
             </Row>
         </Container>
