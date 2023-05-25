@@ -29,7 +29,7 @@ if APP_ENV == 'item':
     urlpatterns += [path('item/', include('item.urls'))]
 
 if APP_ENV == 'order':
-    urlpatterns += [path('', include('order.urls'))]
+    urlpatterns += [path('order/', include('order.urls'))]
 
 if APP_ENV == 'account':
     urlpatterns += [path('',include('account.urls'))]

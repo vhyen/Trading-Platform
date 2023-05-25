@@ -4,38 +4,38 @@ from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
-from order.models import SellOrder
-from order.serializers.sell_order import SellOrderSerializer, CreateSellOrderSerializer
+from order.models import BuyOrder
+from order.serializers.buy_order import BuyOrderSerializer, CreateBuyOrderSerializer
 
 
-class SellOrderFilter(filters.FilterSet):
+class BuyOrderFilter(filters.FilterSet):
     created_at__gt = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
 
     class Meta:
-        model = SellOrder
+        model = BuyOrder
         fields = ['created_at__gt']
 
 
-class SellOrderPagination(PageNumberPagination):
+class BuyOrderPagination(PageNumberPagination):
     page_size = 5
     max_page_size = 100
 
 
-class SellOrderViewSet(ModelViewSet):
-    serializer_class = SellOrderSerializer
-    queryset = SellOrder.objects.all()
+class BuyOrderViewSet(ModelViewSet):
+    serializer_class = BuyOrderSerializer
+    queryset = BuyOrder.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = SellOrderFilter
-    pagination_class = SellOrderPagination
+    filterset_class = BuyOrderFilter
+    pagination_class = BuyOrderPagination
     permission_classes = []
 
 
     def get_serializer_class(self):
         match self.action:
             case "create":
-                return CreateSellOrderSerializer
+                return CreateBuyOrderSerializer
             case _:
-                return SellOrderSerializer
+                return BuyOrderSerializer
 
     def get_permissions(self):
         match self.action:
