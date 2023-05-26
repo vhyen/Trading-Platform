@@ -6,5 +6,7 @@ export enum Color{
     text_grey="#CCD1D9",
     text_green="#3BA500",
     form_text_second = "#848E9C",
-    form_text_primary = "#EAECEF"
+    form_text_primary = "#EAECEF",
+    form_background_main="#1E2026",
+    form_background_text="#292d35"
 }
