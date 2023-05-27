@@ -1,8 +1,7 @@
 from rest_framework import serializers
-
 from account.models import Account
-from item.models import Item, OwnedItem
-from order.models import SellOrder, BuyOrder
+from item.models import Item
+from order.models import BuyOrder
 
 
 class BuyOrderSerializer(serializers.ModelSerializer):
