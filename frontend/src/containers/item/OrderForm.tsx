@@ -6,9 +6,12 @@ export default function OrderForm() {
     <>
       <style className="text/css">
           {`    
-            .custominput:onClick {
-              border: none;
-              background-color: #FFF;
+             .custominput:focus {
+                   color: blue;
+                   background-color:gray;
+                   outline:0;
+                   border-color:red;
+                   box-shadow:none;
             }
       `}
       </style>
@@ -52,10 +55,6 @@ export default function OrderForm() {
               <Form.Control
                 id="inlineFormInputGroup"
                 style={{
-                  textAlign: `right`,
-                  background: Color.form_background_text,
-                  border: `none`,
-                  color: Color.form_text_primary,
                 }}
                 className="custominput"
                 type="number"
