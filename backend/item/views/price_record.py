@@ -1,88 +1,90 @@
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-
-from item.models import PriceRecord
-from item.serializers.price_record import CandleMinuteSerializer, CandleHourSerializer
-
 from datetime import datetime
 
-from django.db.models import Case, When, Value, Max, Min, F, Subquery, OuterRef, Sum, CharField
-from django.db.models.functions import ExtractHour, ExtractMinute, ExtractDay, Floor, Concat, ExtractYear
+from django.db.models import Value, Max, Min, F, Subquery, OuterRef, CharField
+from django.db.models.functions import ExtractHour, ExtractMinute, Floor, Concat
+from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
+
+from item.models import PriceRecord
+from item.serializers.price_record import CandleSerializer
+
+
+def candle_query(price):
+    close_price = price.annotate(close=F('price')) \
+                      .values("date", "closest_space", "close", name=F("item__name")) \
+                      .filter(date=OuterRef('date'),
+                              closest_space=OuterRef('closest_space'),
+                              name=OuterRef("name")) \
+                      .order_by("-datetime")[:1]
+
+    open_price = price.annotate(open=F('price')) \
+                     .values("date", "closest_space", "open", name=F("item__name")) \
+                     .filter(date=OuterRef('date'),
+                             closest_space=OuterRef('closest_space'),
+                             name=OuterRef("name")) \
+                     .order_by("datetime")[:1]
+
+    return price.values("date", "closest_space", name=F("item__name")) \
+        .annotate(highest=Max("price"),
+                  lowest=Min("price"),
+                  close=Subquery(close_price.values("close")),
+                  open=Subquery(open_price.values("open")))
 
 
 def candle_minute_query(item, space):
-    price = PriceRecord.objects.filter(item__name=item).annotate(
-        date=Concat(ExtractYear('datetime'), Value("-"), ExtractDay("datetime"), Value("-"), ExtractHour("datetime"),
-                    output_field=CharField()),
-        closest_quarter_of_hour=Floor(ExtractMinute("datetime") / space))
-    close_price = price.annotate(close=F('price')) \
-                      .values("date", "closest_quarter_of_hour", "close", name=F("item__name")) \
-                      .filter(date=OuterRef('date'),
-                              closest_quarter_of_hour=OuterRef('closest_quarter_of_hour'),
-                              name=OuterRef("name")) \
-                      .order_by("-datetime")[:1]
-
-    open_price = price.annotate(open=F('price')) \
-                     .values("date", "closest_quarter_of_hour", "open", name=F("item__name")) \
-                     .filter(date=OuterRef('date'),
-                             closest_quarter_of_hour=OuterRef('closest_quarter_of_hour'),
-                             name=OuterRef("name")) \
-                     .order_by("datetime")[:1]
-
-    final = price.values("date", "closest_quarter_of_hour", name=F("item__name")) \
-        .annotate(highest=Max("price"),
-                  lowest=Min("price"),
-                  close=Subquery(close_price.values("close")),
-                  open=Subquery(open_price.values("open")))
-    return final
+    price_minute = PriceRecord.objects \
+        .filter(item__name=item) \
+        .annotate(date=Concat(F('datetime__date'), Value("-"), ExtractHour("datetime"), output_field=CharField()),
+                  closest_space=Floor(ExtractMinute("datetime") / space))
+    return candle_query(price_minute)
 
 
 def candle_hour_query(item, space):
-    price = PriceRecord.objects.filter(item__name=item).annotate(
-        date=Concat(ExtractYear('datetime'), Value("-"), ExtractDay("datetime"), output_field=CharField()),
-        closest_hour_of_day=Floor(ExtractHour("datetime") / space))
+    price_hour = PriceRecord.objects \
+        .filter(item__name=item) \
+        .annotate(date=F("datetime__date"), closest_space=Floor(ExtractHour("datetime") / space))
+    return candle_query(price_hour)
 
-    close_price = price.annotate(close=F('price')) \
-                      .values("date", "closest_hour_of_day", "close", name=F("item__name")) \
-                      .filter(date=OuterRef('date'),
-                              closest_hour_of_day=OuterRef('closest_hour_of_day'),
-                              name=OuterRef("name")) \
-                      .order_by("-datetime")[:1]
 
-    open_price = price.annotate(open=F('price')) \
-                     .values("date", "closest_hour_of_day", "open", name=F("item__name")) \
-                     .filter(date=OuterRef('date'),
-                             closest_hour_of_day=OuterRef('closest_hour_of_day'),
-                             name=OuterRef("name")) \
-                     .order_by("datetime")[:1]
+def candle_now_minute_query(item, space):
+    now_space = Floor(datetime.now().minute / space)
+    latest_minute_price = PriceRecord.objects \
+        .filter(item__name=item, datetime__date=datetime.now().date(), datetime__hour=datetime.now().hour) \
+        .annotate(closest_space=Floor(ExtractMinute("datetime") / space)) \
+        .filter(closest_space=now_space) \
+        .annotate(date=Concat(F('datetime__date'), Value("-"), ExtractHour("datetime"), output_field=CharField()))
 
-    third = price.values("date", "closest_hour_of_day", name=F("item__name")) \
-        .annotate(highest=Max("price"),
-                  lowest=Min("price"),
-                  close=Subquery(close_price.values("close")),
-                  open=Subquery(open_price.values("open")))
-    return third
+    return candle_query(latest_minute_price)
+
+
+def candle_now_hour_query(item, space):
+    now_space = Floor(datetime.now().hour / space)
+    latest_hour_price = PriceRecord.objects.filter(item__name=item, datetime__date=datetime.now().date()) \
+        .annotate(date=F("datetime__date"), closest_space=Floor(ExtractHour("datetime") / space)) \
+        .filter(closest_space=now_space)
+
+    return candle_query(latest_hour_price)
 
 
 class PriceRecordViewSet(ModelViewSet):
-    serializer_class = CandleMinuteSerializer
+    serializer_class = CandleSerializer
     queryset = PriceRecord.objects.none()
     http_method_names = ["get"]
-
-    def get_serializer_class(self):
-        match self.action:
-            case "candle_minute":
-                return CandleMinuteSerializer
-            case "candle_hour":
-                return CandleHourSerializer
 
     def get_queryset(self):
         match self.action:
             case "candle_minute":
-                return candle_minute_query(self.request.query_params["item"], int(self.request.query_params["space"]))
+                return candle_minute_query(self.request.query_params["item"],
+                                           int(self.request.query_params["space"]))
             case "candle_hour":
-                return candle_hour_query(self.request.query_params["item"], int(self.request.query_params["space"]))
+                return candle_hour_query(self.request.query_params["item"],
+                                         int(self.request.query_params["space"]))
+            case "candle_now_minute":
+                return candle_now_minute_query(self.request.query_params["item"],
+                                               int(self.request.query_params["space"]))
+            case "candle_now_hour":
+                return candle_now_hour_query(self.request.query_params["item"],
+                                             int(self.request.query_params["space"]))
 
     @action(methods=["GET"], detail=False)
     def candle_minute(self, request):
@@ -90,4 +92,12 @@ class PriceRecordViewSet(ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def candle_hour(self, request):
+        return self.list(request)
+
+    @action(methods=["GET"], detail=False)
+    def candle_now_minute(self, request):
+        return self.list(request)
+
+    @action(methods=["GET"], detail=False)
+    def candle_now_hour(self, request):
         return self.list(request)

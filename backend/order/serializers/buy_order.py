@@ -19,7 +19,6 @@ class CreateBuyOrderSerializer(serializers.ModelSerializer):
         total_buy = BuyOrder.objects.values_list("quantity","price")\
             .filter(item=data["item"], owner=self.context.get('request').user)
 
-
         is_buying = 0
         for buy in total_buy:
             is_buying += buy[0] * buy[1]
