@@ -21,7 +21,7 @@ export default function CarouselItem() {
         },
     ]
     return (
-        <Carousel showArrows={false} showStatus={false} autoFocus={true} autoPlay={true} dynamicHeight={false} infiniteLoop={true} transitionTime={0.3}>
+        <Carousel showArrows={false} showIndicators={false} showStatus={false} autoFocus={true} autoPlay={true} dynamicHeight={false} infiniteLoop={true} transitionTime={0.3}>
             {images.map((image:any)=>{return(<CarouselImage key={image.id} source={image.source} content=""/>)})}
         </Carousel>
     )

@@ -1,7 +1,9 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import NavButton from "../../components/NavButton";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+  const navigate = useNavigate()
   const NavList = [
     {
       id: 0,
@@ -44,7 +46,7 @@ export default function NavBar() {
       <Container fluid className="navbar p-0">
         <Row className=" h-100 w-100 align-items-center px-5">
           <Col className="h-100 col-sm-2">
-            <Button variant="nav">
+          <Button variant="nav">
               <img src="logo.png" alt="Logo" style={{ height: "100%" }} />
             </Button>
           </Col>
@@ -62,7 +64,7 @@ export default function NavBar() {
           aria-describedby="basic-addon1"
           />
           </Col>
-          <Col sm={2}><p className="text-end m-0 mx-3">Login</p></Col>
+          <Col sm={2}><Button onClick={()=>navigate("/login")}>Login</Button></Col>
         </Row>
       </Container>
     </>

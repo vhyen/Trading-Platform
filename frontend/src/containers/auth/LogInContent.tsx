@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 // import "../../css/bootstrap-social.css"
-import { GoogleLogin } from '@react-oauth/google';
 
 export default function LogInContent() {
     const responseMessage = (response: any) => {
@@ -64,10 +63,10 @@ export default function LogInContent() {
             </Row>
     
             <Row style={{paddingBlock: '10px'}}>
-                {/* <Button className="btn-google" href="/auth/google" >
+                <Button className="btn-google" href="/auth/google" >
                     Continue with Google
-                </Button> */}
-                <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+                </Button>
+                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
 
             </Row>
         </Container>

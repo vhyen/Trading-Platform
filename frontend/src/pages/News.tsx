@@ -3,7 +3,10 @@ import NewsContent from '../containers/news/NewsContent'
 
 export default function News() {
     return (
-        <div>
+        <div className="vh-100" style={{
+            display: 'flex',
+            flexDirection: 'column',
+        }}>
             <NavBar/>
             <NewsContent/>
             <Footer/>

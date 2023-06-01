@@ -68,7 +68,7 @@ export default function PopularItems() {
           <p className="fw-bold text-center">Price</p>
         </Col>
         <Col>
-          <p className="fw-bold">24h Change</p>
+          <p className="fw-bold text-center">24h Change</p>
         </Col>
         <Col>
           <p className="fw-bold text-end">Market Cap </p>

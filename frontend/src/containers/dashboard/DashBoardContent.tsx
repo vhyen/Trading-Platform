@@ -1,15 +1,18 @@
-import { Container} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import TotalInfo from "./TotalInfo";
 import PopularItems from "./PopularItems";
 import CarouselItem from "./CarouselItem";
+import StartEarn from "./StartEarn";
 
 export default function DashBoardContent() {
   return (
-    <Container style={{ flex: 1 }}>
-        <TotalInfo/>
-        <PopularItems/>
-        <div style={{height:"500px"}}></div>
-        <CarouselItem/>
-    </Container>
+    <div style={{ flex: 1 }}>
+      <Container>
+        <TotalInfo />
+        <CarouselItem />
+        <PopularItems />
+      </Container>
+      <StartEarn/>
+    </div>
   );
 }

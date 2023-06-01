@@ -8,7 +8,7 @@ export default function CarouselImage({ source, content }: any) {
             `}
       </style>
       <div>
-        <img src={source} className="rounded-6" />
+        <img style={{height:"300px", backgroundSize:"cover"}} src={source} className="rounded-6" />
         {/* <p className="legend carousel-img">{content}</p> */}
       </div>
     </>

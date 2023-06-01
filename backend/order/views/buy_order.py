@@ -2,6 +2,7 @@ import django_filters
 from django_filters import rest_framework as filters
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from order.models import BuyOrder
@@ -40,6 +41,6 @@ class BuyOrderViewSet(ModelViewSet):
     def get_permissions(self):
         match self.action:
             case "create":
-                return (permissions.IsAuthenticated(),)
+                return [permissions.IsAuthenticated(),]
             case _:
-                return (permissions.AllowAny())
+                return [permissions.AllowAny,]

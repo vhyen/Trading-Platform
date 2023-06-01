@@ -18,7 +18,7 @@ export default function TotalInfo(){
             highlight:"100.000$",
             description:"24h trading volume on Binance exchange",
         },{
-            id:2,
+            id:3,
             highlight:"100.000$",
             description:"24h trading volume on Binance exchange",
         }
