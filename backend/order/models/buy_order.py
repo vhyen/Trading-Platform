@@ -19,7 +19,7 @@ class BuyOrder(models.Model):
     created_at = models.DateTimeField("Created at", auto_now_add=True)
     updated_at = models.DateTimeField("Updated at", auto_now=True)
     price = models.DecimalField(max_digits=5, decimal_places=1, validators=[MinValueValidator(0.1)])
-
+    filled = models.BigIntegerField(validators=[MinValueValidator(0), ],default=0)
     type = models.CharField(choices=ORDER_TYPES, max_length=1)
     is_completed = models.BooleanField(default=False)
 
