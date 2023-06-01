@@ -4,10 +4,12 @@ from order.models import BuyOrder, SellOrder
 
 
 @admin.register(SellOrder)
-class ItemAdmin(admin.ModelAdmin):
+class SellOrderAdmin(admin.ModelAdmin):
     list_display = ['item', 'price', 'quantity', 'owner']
+    list_filter = ['price', 'quantity']
 
 
 @admin.register(BuyOrder)
-class ItemAdmin(admin.ModelAdmin):
+class BuyOrderAdmin(admin.ModelAdmin):
     list_display = ['item', 'price', 'quantity', 'owner']
+    list_filter = ['price', 'quantity']

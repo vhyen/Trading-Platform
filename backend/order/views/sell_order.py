@@ -40,6 +40,6 @@ class SellOrderViewSet(ModelViewSet):
     def get_permissions(self):
         match self.action:
             case "create":
-                return (permissions.IsAuthenticated(),)
+                return [permissions.IsAuthenticated(),]
             case _:
-                return (permissions.AllowAny())
+                return [permissions.AllowAny,]

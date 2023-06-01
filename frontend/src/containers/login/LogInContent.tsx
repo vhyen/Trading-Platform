@@ -67,7 +67,7 @@ export default function LogInContent() {
                 {/* <Button className="btn-google" href="/auth/google" >
                     Continue with Google
                 </Button> */}
-                <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
 
             </Row>
         </Container>
