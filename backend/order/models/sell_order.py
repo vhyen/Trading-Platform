@@ -24,6 +24,8 @@ class SellOrder(models.Model):
     filled = models.BigIntegerField(validators=[MinValueValidator(0), ], default=0)
     type = models.CharField(choices=ORDER_TYPES, max_length=1)
     is_completed = models.BooleanField(default=False)
+    # is_progressed = models.BooleanField(default=False)
+    
 
     def save(self, *args, **kwargs):
         if self.quantity <= self.item.supply:

@@ -1,6 +1,8 @@
 from django.http import HttpResponse
+from django.db import transaction
 from celery import Celery, shared_task
 from celery.schedules import crontab
+
 
 from order.models import SellOrder, BuyOrder, Transaction
 
@@ -12,34 +14,49 @@ app.conf.broker_url = 'redis: //127.0.0.1:6379/0'
 # sell market: khop voi buy cao nhat
 
 
+@transaction.atomic
 def match_sell_order(order):
     if order.type == 'M':
-        buy_orders = BuyOrder.objects.all().filter(item=order.item, type='L',
-                                                   is_completed=False).order_by('-price', '-quantity')
-        if len(buy_orders) < 1 or order.quantity < buy_orders[0].quantity:
-            return
+        buy_orders = BuyOrder.objects.all().filter(item=order.item, type='L', is_completed=False).order_by('-price', '-quantity')
+        if len(buy_orders) < 1:
+            return 
+        sell_needs = order.quantity - order.filled
         index = 0
-        sell_quantity = order.quantity
-        while index < len(buy_orders) and sell_quantity >= 0 and sell_quantity >= buy_orders[index].quantity:
-            create_transaction(
-                buy_orders[index], 'B', buy_orders[index].price, buy_orders[index].quantity)
-            create_transaction(
-                order, 'S', buy_orders[index].price, buy_orders[index].quantity)
-            sell_quantity -= buy_orders[index].quantity
+        while sell_needs >= 0 and index < len(buy_orders):
+            buy_needs = buy_orders[index].quantity - buy_orders[index].filled
+            if sell_needs == buy_needs:
+                create_transaction(order, 'S', buy_orders[index].price)
+                create_transaction(buy_orders[index], 'B', buy_orders[index].price)
+            elif sell_needs < buy_needs:
+                create_transaction(order, 'S', buy_orders[index].price)
+                update_filled_quantity(buy_orders[index], buy_orders[index].filled + sell_needs, type='B')
+            else:
+                create_transaction(buy_orders[index].uuid, 'B', buy_orders[index].price)
+                update_filled_quantity(order, order.filled + sell_needs, type='S')
             index += 1
+    if order.type == 'L':
+        pass
 
-    # if order.type == 'L':
-        # sell_orders = SellOrder.objects.all().filter(item=order.item, type='L', is_completed=False).order_by('-price', '-quantity')
-        # if order.price > sell_orders[0].price:
-        #     pass
+def match_buy_order(order):
+    pass
 
-    # while buy_index < len(buy_orders) and sell_index < len(sell_orders):
-    #     if (sell_orders[sell_index].price > buy_orders[buy_index].price):
-    #         sell_index += 1
-    #     elif sell_orders[sell_index].price < buy_orders[buy_index].price:
-    #         buy_index += 1
-    #     elif sell_orders[sell_index].price < buy
-
+@transaction.atomic
+def update_filled_quantity(order, new_quantity, type):
+    if type == 'S':
+        sorder = SellOrder.objects.get(uuid=order.uuid)
+        if sorder.is_complete: 
+            return False
+        sorder.filled_quantity = new_quantity
+        sorder.save()
+        return True
+    if type == 'B':
+        border = BuyOrder.objects.get(uuid=order.uuid)
+        if border.is_completed:
+            return False
+        border.filled_quantity = new_quantity
+        border.save()
+        return True
+        
 
 def match_market_sell_limit_buy(item):
     limit_buy_orders = BuyOrder.objects.all().filter(
@@ -54,17 +71,11 @@ def match_market_sell_limit_buy(item):
     # for sell_order in market_sell_orders:
     #     if
 
-
-def create_transaction(order, type, price, quantity):
-    if order.is_completed == True:
-        return
+@transaction.atomic
+def create_transaction(order, type, price):
     order.is_completed = True
-    if order.quantity > quantity:
-        order.quantity -= quantity
-        order.is_completed = False
     order.save()
-    Transaction.objects.create(
-        item=order.item, price=price, quantity=quantity, type=type, owner=order.owner)
+    Transaction.objects.create(item=order.item, price=price, type=type, owner=order.owner, quantity=order.quantity)
 
 
 list1 = [3, 4]
@@ -118,3 +129,5 @@ def matching(list1, list2, index1, index2, sum1, sum2, check):
     matching(index1, index2+1, sum1, sum2, check)
     chosen2[index2] = True
     matching(index1, index2+1, sum1, sum2 + list2[index2], check)
+
+
