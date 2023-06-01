@@ -3,6 +3,7 @@ from rest_framework import serializers
 from account.models import Account
 from item.models import Item, OwnedItem
 from order.models import SellOrder
+from order.tasks import match_sell_order
 
 
 class SellOrderSerializer(serializers.ModelSerializer):
@@ -18,8 +19,8 @@ class CreateSellOrderSerializer(serializers.ModelSerializer):
             .filter(username=self.context.get('request').user, owned_item__item=data["item"])
 
         if own.count() == 0:
-            raise serializers.ValidationError('You no have this item')
-        total_sell = SellOrder.objects.values_list("quantity", flat=True).filter(item=data["item"],
+            raise serializers.ValidationError('You donnot have this item')
+        total_sell = SellOrder.objects.values_list("quantity", flat=True).filter(item=data["item"], is_completed=False,
                                                                                  owner=self.context.get('request').user)
         is_selling = 0
         for sell in total_sell:
@@ -34,6 +35,8 @@ class CreateSellOrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         order = SellOrder.objects.create(**validated_data, owner=self.context.get('request').user)
+        if order.type == 'M':
+            match_sell_order(order)
         return order
 
     class Meta:
