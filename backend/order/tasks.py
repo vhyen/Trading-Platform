@@ -23,7 +23,7 @@ def match_sell_order(order):
             return
         sell_needs = order.quantity - order.filled
         index = 0
-        while index < len(buy_orders):
+        while index < buy_orders.count():
             buy_needs = buy_orders[index].quantity - buy_orders[index].filled
             if sell_needs == buy_needs:
                 b = buy_orders[index]
@@ -40,8 +40,46 @@ def match_sell_order(order):
                 sell_needs -= buy_needs
             index += 1
     if order.type == 'L':
-
-        pass
+        sell_order = SellOrder.objects.all().filter(item=order.item, is_completed=False, type='L')
+        if sell_order.count() == 1:
+            market_buy_orders = BuyOrder.objects.all().filter(item=order.item, is_completed=False, type='M')
+            index = 0
+            while index < market_buy_orders.count() > 0 and order.is_complete==False:
+                sell_needs = order.quantity - order.filled
+                buy_needs = market_buy_orders[index].quantity - market_buy_orders[index].filled
+                if sell_needs == buy_needs:
+                    b = market_buy_orders[index]
+                    create_transaction(order, 'S', market_buy_orders[index].price)
+                    create_transaction(b, 'B', market_buy_orders[index].price)
+                elif sell_needs < buy_needs:
+                    create_transaction(order, 'S', market_buy_orders[index].price)
+                    update_filled_quantity(market_buy_orders[index], market_buy_orders[index].filled + sell_needs, type='B')
+                    break
+                else:
+                    b = market_buy_orders[index]
+                    create_transaction(b, 'B', market_buy_orders[index].price)
+                    update_filled_quantity(order, order.filled + buy_needs, type='S')
+                    sell_needs -= buy_needs
+                index += 1
+        limit_buy_orders = BuyOrder.objects.all().filter(item=order.item, is_completed=False, type='L', price=order.price)
+        index = 0
+        while index < limit_buy_orders.count() > 0 and order.is_complete==False:
+            sell_needs = order.quantity - order.filled
+            buy_needs = limit_buy_orders[index].quantity - limit_buy_orders[index].filled
+            if sell_needs == buy_needs:
+                b = limit_buy_orders[index]
+                create_transaction(order, 'S', limit_buy_orders[index].price)
+                create_transaction(b, 'B', limit_buy_orders[index].price)
+            elif sell_needs < buy_needs:
+                create_transaction(order, 'S', limit_buy_orders[index].price)
+                update_filled_quantity(limit_buy_orders[index], limit_buy_orders[index].filled + sell_needs, type='B')
+                break
+            else:
+                b = limit_buy_orders[index]
+                create_transaction(b, 'B', limit_buy_orders[index].price)
+                update_filled_quantity(order, order.filled + buy_needs, type='S')
+                sell_needs -= buy_needs
+            index += 1
 
 
 def match_buy_order(order):
