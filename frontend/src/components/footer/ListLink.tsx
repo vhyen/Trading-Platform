@@ -17,7 +17,7 @@ export default function ListLink({ title, list }: any) {
         <ul className="list-unstyled" style={{ marginBottom: 0 }}>
           {list.map((item: any) => {
             return (
-              <li>
+              <li key={item.id}>
                 <NavLink className="nav-footer" to={item.to}>
                   {item.title}
                 </NavLink>

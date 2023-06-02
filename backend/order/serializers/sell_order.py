@@ -19,7 +19,7 @@ class CreateSellOrderSerializer(serializers.ModelSerializer):
             .filter(username=self.context.get('request').user, owned_item__item=data["item"])
 
         if own.count() == 0:
-            raise serializers.ValidationError('You donnot have this item')
+            raise serializers.ValidationError('You do not have this item')
         total_sell = SellOrder.objects.values_list("quantity", flat=True).filter(item=data["item"], is_completed=False,
                                                                                  owner=self.context.get('request').user)
         is_selling = 0
@@ -35,8 +35,7 @@ class CreateSellOrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         order = SellOrder.objects.create(**validated_data, owner=self.context.get('request').user)
-        if order.type == 'M':
-            match_sell_order(order)
+        match_sell_order(order)
         return order
 
     class Meta:
