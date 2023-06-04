@@ -23,7 +23,7 @@ class BuyOrder(models.Model):
     type = models.CharField(choices=ORDER_TYPES, max_length=1)
     is_completed = models.BooleanField(default=False)
     # is_progressed = models.BooleanField(default=False)
-
+    total = models.DecimalField(max_digits=7, decimal_places=1, validators=[MinValueValidator(0.0)],default=0)
     def save(self, *args, **kwargs):
         if self.quantity <= self.item.supply:
             super().save(*args, **kwargs)
