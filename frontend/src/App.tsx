@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import { DashBoard, ItemDetail, LogInPage, News, SignUpPage, Wallet } from './pages/index'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './redux/store';
 import LOCAL_STORAGE_KEYS from './constants/local_storage';
 import client from './client/axios';

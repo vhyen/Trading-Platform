@@ -20,6 +20,11 @@ class AccountSerializer(serializers.ModelSerializer):
                   'transaction']
 
 
+class AccountSerializerBase(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['uuid', 'type', 'username', 'email', 'last_name', 'first_name', 'balance']
+
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -38,7 +43,8 @@ class SignUpSerializer(serializers.Serializer):
             self.validated_data.get('email'),
             self.validated_data.get('password'),
             first_name=self.validated_data.get('first_name'),
-            last_name=self.validated_data.get('last_name')
+            last_name=self.validated_data.get('last_name'),
+            balance=100
         )
 
 
@@ -81,7 +87,9 @@ class GoogleSerializer(serializers.Serializer):
                 last_name = idinfo['family_name']
                 email = idinfo['email']
                 if Account.objects.filter(email=email).count() == 0:
-                    Account.objects.create_user(username, email, password, first_name=first_name, last_name=last_name)
+                    Account.objects.create_user(username, email, password,
+                                                first_name=first_name, last_name=last_name,
+                                                balance=100)
 
                 user = authenticate(request=self.context.get('request'),
                                     username=username, password=password)

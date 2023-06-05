@@ -1,9 +1,13 @@
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Form, Input } from 'antd'
 import { useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import NameRegister from '../../components/auth/NameRegister'
-
+import { User } from '../../constants/types'
+import axios, { AxiosError } from 'axios'
+import account from '../../client/axios'
+import APIS from '../../constants/api'
+import { Color } from '../../constants/Color'
 export default function SignUpForm() {
 	const navigate = useNavigate()
 
@@ -19,7 +23,24 @@ export default function SignUpForm() {
 	const [inputError, setInputError] = useState<InputError>({})
 
 	const onFinish = (values: any) => {
-        setInputError(values)
+		account
+			.post<User>(APIS.SIGN_UP, {
+				username: values.username,
+				first_name: values.firstname,
+				last_name: values.lastname,
+				password: values.password,
+				email: values.email,
+			})
+			.then(() => {
+				navigate('/')
+			})
+			.catch((err: Error | AxiosError<InputError>) => {
+				if (axios.isAxiosError(err)) {
+					if (err.response) {
+						setInputError(err.response.data)
+					}
+				}
+			})
 	}
 
 	return (
@@ -151,6 +172,9 @@ export default function SignUpForm() {
 							style={{
 								borderRadius: 20,
 								width: '60%',
+								backgroundColor:Color.main,
+								color:Color.primary,
+								fontWeight:"bold"
 							}}
 						>
 							Submit

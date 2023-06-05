@@ -1,7 +1,10 @@
-export interface Account {
-	first_name: string
-	last_name: string
-	username: string
+export interface Account{
+	first_name: string;
+	last_name: string;
+	username: string;
+	email:string;
+	banlance: number;
+	type:string;
 }
 export interface Post{
 	uuid: string;
