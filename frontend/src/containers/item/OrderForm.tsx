@@ -1,76 +1,47 @@
-import { Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Color } from "../../constants/Color";
+import InputField from "../../components/item/forms/InputField";
 
-export default function OrderForm() {
+export default function OrderForm({ button }: any) {
   return (
     <>
       <style className="text/css">
-          {`    
+        {`    
              .custominput:focus {
-                   color: blue;
                    background-color:gray;
                    outline:0;
-                   border-color:red;
-                   box-shadow:none;
+                   border-color:gray;
+                   border:none;
+                   box-shadow: none;
             }
       `}
       </style>
       <Form className="p-5" style={{ background: Color.form_background_main }}>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label color={Color.form_text_second}>Avbl</Form.Label>
-            <Form.Control
-              className="mb-3"
-              style={{ background: Color.form_background_text }}
-              size="sm"
-              type="number"
-              placeholder="Price"
-            />
-            <Form.Control
-              style={{ background: Color.form_background_text }}
-              size="sm"
-              type="text"
-              placeholder="Amount"
-            />
-          </Form.Group>
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Label
+            style={{
+              color: Color.form_text_second,
+              fontSize: `14px`,
+            }}
+            className="ml-3"
+          >
+            Abvl
+          </Form.Label>
+          <InputField field="Price" unit="USDT" />
+          <InputField field="Amount" unit="SJK" />
+        </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label
-              style={{ color: Color.form_text_second }}
-              className="ml-3"
-            >
-              Avbl
-            </Form.Label>
-            <InputGroup className="mb-2">
-              <InputGroup.Text
-                style={{
-                  background: Color.form_background_text,
-                  color: Color.form_text_second,
-                  border: `none`,
-                }}
-              >
-                {" "}
-                Price
-              </InputGroup.Text>
-              <Form.Control
-                id="inlineFormInputGroup"
-                style={{
-                }}
-                className="custominput"
-                type="number"
-              />
-              <InputGroup.Text
-                style={{
-                  background: Color.form_background_text,
-                  color: Color.form_text_primary,
-                  border: `none`,
-                }}
-              >
-                USDT
-              </InputGroup.Text>
-            </InputGroup>
-          </Form.Group>
-        </Row>
+        <Button
+          style={{
+            width: `-webkit-fill-available`,
+            background: Color.form_background_text,
+            color: Color.main,
+            border: `none`,
+          }}
+          className="pt-2 pb-2"
+        >
+          {button}
+        </Button>
       </Form>
     </>
   );
