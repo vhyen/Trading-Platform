@@ -16,3 +16,4 @@ class ItemAdmin(admin.ModelAdmin):
 @admin.register(PriceRecord)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['item', 'price', 'datetime']
+    ordering = ['datetime']

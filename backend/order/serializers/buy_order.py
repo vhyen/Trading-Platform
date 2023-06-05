@@ -2,6 +2,7 @@ from rest_framework import serializers
 from account.models import Account
 from item.models import Item
 from order.models import BuyOrder
+from order.tasks import match_buy_order
 
 
 class BuyOrderSerializer(serializers.ModelSerializer):
@@ -16,7 +17,7 @@ class CreateBuyOrderSerializer(serializers.ModelSerializer):
         balance = Account.objects.values_list("balance",flat=True).filter(username=self.context.get('request').user)[0]
 
         total_buy = BuyOrder.objects.values_list("quantity","price")\
-            .filter(item=data["item"], owner=self.context.get('request').user)
+            .filter(item=data["item"], owner=self.context.get('request').user,is_completed=False)
 
         is_buying = 0
         for buy in total_buy:
@@ -30,6 +31,7 @@ class CreateBuyOrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         order = BuyOrder.objects.create(**validated_data, owner=self.context.get('request').user)
+        match_buy_order(order)
         return order
 
     class Meta:

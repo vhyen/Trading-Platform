@@ -1,7 +1,5 @@
 from rest_framework import serializers
 
-from item.models import PriceRecord
-
 
 class CandleSerializer(serializers.Serializer):
     name = serializers.CharField()
