@@ -4,6 +4,7 @@ import CandleStickChart from "../containers/item/CandleStickChart";
 import { NavBar } from "../containers/bars";
 import OrderForm from "../containers/item/OrderForm";
 
+
 export default function ItemDetail() {
   return (
     <>
@@ -24,13 +25,7 @@ export default function ItemDetail() {
                 />
               </Row>
               <Row>
-                <Col className="p-0">
-                <OrderForm button="Buy"/>
-                </Col>
-                <Col className="p-0">
-                <OrderForm button="Sell"/>
-                </Col>
-
+                <OrderForm/>
               </Row>
             </Container>
           </Col>

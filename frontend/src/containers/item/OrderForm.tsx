@@ -1,48 +1,71 @@
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import { Row, Col } from "react-bootstrap";
+import OrderLimitForm from "./OrderLimitForm";
+import OrderMarketForm from "./OrderMarketForm";
 import { Color } from "../../constants/Color";
-import InputField from "../../components/item/forms/InputField";
 
-export default function OrderForm({ button }: any) {
+export default function OrderForm() {
+  const tabs = ["Limit", "Market"];
+  
+
+
   return (
     <>
-      <style className="text/css">
-        {`    
-             .custominput:focus {
-                   background-color:gray;
-                   outline:0;
-                   border-color:gray;
-                   border:none;
-                   box-shadow: none;
-            }
-      `}
-      </style>
-      <Form className="p-5" style={{ background: Color.form_background_main }}>
-        <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label
-            style={{
-              color: Color.form_text_second,
-              fontSize: `14px`,
-            }}
-            className="ml-3"
-          >
-            Abvl
-          </Form.Label>
-          <InputField field="Price" unit="USDT" />
-          <InputField field="Amount" unit="SJK" />
-        </Form.Group>
+      <Tabs px={0} backgroundColor={Color.form_background_main}>
+        <TabList className="mx-4 my-3">
+          {tabs.map((tab) => (
+            <Tab
+              key={tab}
+              color={Color.form_text_second}
+              backgroundColor={"transparent"}
+              border={"none"}
+              _selected={{ color: Color.main }}
+              className="ps-0 me-3"
+            >
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
 
-        <Button
-          style={{
-            width: `-webkit-fill-available`,
-            background: Color.form_background_text,
-            color: Color.main,
-            border: `none`,
-          }}
-          className="pt-2 pb-2"
-        >
-          {button}
-        </Button>
-      </Form>
+        <TabPanels>
+          <TabPanel>
+            <Row className="m-0">
+              <Col className="p-0">
+                <OrderLimitForm
+                  button="Sell"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+              <Col className="p-0">
+                <OrderLimitForm
+                  button="Buy"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+            </Row>
+          </TabPanel>
+          <TabPanel>
+            <Row className="m-0">
+              <Col className="p-0">
+                <OrderMarketForm
+                  button="Sell"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+              <Col className="p-0">
+                <OrderMarketForm
+                  button="Buy"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+            </Row>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
   );
 }
