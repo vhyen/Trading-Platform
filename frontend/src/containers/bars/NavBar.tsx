@@ -63,7 +63,7 @@ export default function NavBar() {
           aria-describedby="basic-addon1"
           /> */}
           </Col>
-          <Col sm={3}><Authenticate/></Col>
+          <Authenticate/>
         </Row>
       </Container>
     </>

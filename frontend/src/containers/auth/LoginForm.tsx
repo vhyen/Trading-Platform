@@ -80,6 +80,7 @@ export default function SignInForm() {
 							placeholder="Username"
 							style={{
 								borderRadius: 20,
+								borderColor:Color.main
 							}}
 						/>
 					</Form.Item>
@@ -104,6 +105,7 @@ export default function SignInForm() {
 							placeholder="Password"
 							style={{
 								borderRadius: 20,
+								borderColor:Color.main
 							}}
 						/>
 					</Form.Item>
