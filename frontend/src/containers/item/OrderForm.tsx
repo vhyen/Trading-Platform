@@ -1,77 +1,71 @@
-import { Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import { Row, Col } from "react-bootstrap";
+import OrderLimitForm from "./OrderLimitForm";
+import OrderMarketForm from "./OrderMarketForm";
 import { Color } from "../../constants/Color";
 
 export default function OrderForm() {
+  const tabs = ["Limit", "Market"];
+  
+
+
   return (
     <>
-      <style className="text/css">
-          {`    
-             .custominput:focus {
-                   color: blue;
-                   background-color:gray;
-                   outline:0;
-                   border-color:red;
-                   box-shadow:none;
-            }
-      `}
-      </style>
-      <Form className="p-5" style={{ background: Color.form_background_main }}>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label color={Color.form_text_second}>Avbl</Form.Label>
-            <Form.Control
-              className="mb-3"
-              style={{ background: Color.form_background_text }}
-              size="sm"
-              type="number"
-              placeholder="Price"
-            />
-            <Form.Control
-              style={{ background: Color.form_background_text }}
-              size="sm"
-              type="text"
-              placeholder="Amount"
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label
-              style={{ color: Color.form_text_second }}
-              className="ml-3"
+      <Tabs px={0} backgroundColor={Color.form_background_main}>
+        <TabList className="mx-4 my-3">
+          {tabs.map((tab) => (
+            <Tab
+              key={tab}
+              color={Color.form_text_second}
+              backgroundColor={"transparent"}
+              border={"none"}
+              _selected={{ color: Color.main }}
+              className="ps-0 me-3"
             >
-              Avbl
-            </Form.Label>
-            <InputGroup className="mb-2">
-              <InputGroup.Text
-                style={{
-                  background: Color.form_background_text,
-                  color: Color.form_text_second,
-                  border: `none`,
-                }}
-              >
-                {" "}
-                Price
-              </InputGroup.Text>
-              <Form.Control
-                id="inlineFormInputGroup"
-                style={{
-                }}
-                className="custominput"
-                type="number"
-              />
-              <InputGroup.Text
-                style={{
-                  background: Color.form_background_text,
-                  color: Color.form_text_primary,
-                  border: `none`,
-                }}
-              >
-                USDT
-              </InputGroup.Text>
-            </InputGroup>
-          </Form.Group>
-        </Row>
-      </Form>
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <Row className="m-0">
+              <Col className="p-0">
+                <OrderLimitForm
+                  button="Sell"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+              <Col className="p-0">
+                <OrderLimitForm
+                  button="Buy"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+            </Row>
+          </TabPanel>
+          <TabPanel>
+            <Row className="m-0">
+              <Col className="p-0">
+                <OrderMarketForm
+                  button="Sell"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+              <Col className="p-0">
+                <OrderMarketForm
+                  button="Buy"
+                  coin_unit="SJK"
+                  price_unit="USDT"
+                />
+              </Col>
+            </Row>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
   );
 }

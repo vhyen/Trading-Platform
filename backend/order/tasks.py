@@ -1,17 +1,21 @@
 from django.db.models import F
 from django.http import HttpResponse
 from django.db import transaction
+from django.core.cache import cache
 from celery import Celery, shared_task
 from celery.schedules import crontab
+from decimal import Decimal
+import math
+from datetime import datetime
 
 from account.models import Account
 from item.models import Item, OwnedItem, PriceRecord
 from order.models import SellOrder, BuyOrder, Transaction
+from order.constants import CachePreferences
 
 app = Celery('tasks', backend='redis://127.0.0.1:6379',
              broker='redis://127.0.0.1:6379')
 app.conf.broker_url = 'redis: //127.0.0.1:6379/0'
-
 
 # mua gia market: khop voi sell thap nhat
 # sell market: khop voi buy cao nhat
@@ -140,13 +144,13 @@ def update_filled_quantity(order, price, new_quantity, type):
     if type == 'S':
         s = SellOrder.objects.filter(uuid=order.uuid)
         s.update(filled=F('filled') + new_quantity, total=F('total') + new_quantity * price)
-        s.update(price=F('total') / F('filled'))
+        s.update(price=F('total') / F('filled'), updated_at=datetime.now())
         Account.objects.filter(uuid=order.owner.uuid).update(balance=F('balance') + price * new_quantity)
         OwnedItem.objects.filter(item=order.item, owner=order.owner).update(quantity=F('quantity') - new_quantity)
     if type == 'B':
         b = BuyOrder.objects.filter(uuid=order.uuid)
         b.update(filled=F('filled') + new_quantity, total=F('total') + new_quantity * price)
-        b.update(price=F('total') / F('filled'))
+        b.update(price=F('total') / F('filled'), updated_at=datetime.now())
         Account.objects.filter(uuid=order.owner.uuid).update(balance=F('balance') - price * new_quantity)
         OwnedItem.objects.filter(item=order.item, owner=order.owner).update(quantity=F('quantity') + new_quantity)
 
@@ -179,5 +183,10 @@ def create_transaction(order, type, price):
     Transaction.objects.create(item=o.item, price=o.price, type=type,
                                owner=o.owner, quantity=o.quantity, total=o.total)
     item = Item.objects.filter(uuid=o.item.uuid)
-    item.update(current_price=price)
+    # cache the 24h change of item
+    item_24h_last_price = Decimal(cache.get(o.item.name+'_24h_last_price'))
+    print(o.item.name+'_24h_last_price')
+    print(cache.get(o.item.name+'_24h_last_price'))
+    change = math.ceil((price - item_24h_last_price)/item_24h_last_price*100)/100
+    item.update(change24=change, current_price=price)
     PriceRecord.objects.create(item=item.first(), price=price)

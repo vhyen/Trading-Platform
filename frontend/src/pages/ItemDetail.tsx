@@ -1,34 +1,36 @@
 import { Col, Container, Row } from "react-bootstrap";
 import OrderBook from "../containers/item/OrderBook";
 import CandleStickChart from "../containers/item/CandleStickChart";
-import { Color } from "../constants/Color";
 import { NavBar } from "../containers/bars";
 import OrderForm from "../containers/item/OrderForm";
 
+
 export default function ItemDetail() {
-    return (
-        <>
-        <NavBar/>
-        <Container fluid className="p-0">
-            <Row>
-                <Col sm={3}>
-                    <OrderBook/>
-                </Col>
-                <Col sm={9} 
-                id="colchart"
-                
-                >
-                    <Container>
-                        <Row>
-                            <CandleStickChart chartHeight={400} chartWidth={1040} highest={33288} lowest={384}/>
-                        </Row>
-                        <Row>
-                            <OrderForm />
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
-        </Container>
-        </>
-    )
+  return (
+    <>
+      <NavBar />
+      <Container fluid className="p-0">
+        <Row>
+          <Col sm={3}>
+            <OrderBook />
+          </Col>
+          <Col sm={9} id="colchart">
+            <Container>
+              <Row>
+                <CandleStickChart
+                  chartHeight={400}
+                  chartWidth={1040}
+                  highest={33288}
+                  lowest={384}
+                />
+              </Row>
+              <Row>
+                <OrderForm/>
+              </Row>
+            </Container>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }

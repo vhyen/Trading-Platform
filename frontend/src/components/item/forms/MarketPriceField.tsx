@@ -1,9 +1,7 @@
 import { Form, InputGroup } from "react-bootstrap";
 import { Color } from "../../../constants/Color";
 
-
-export default function InputField({ field, unit,name }: any) {
-
+export default function MarktePriceField({ field, unit }: any) {
   return (
     <>
       <InputGroup className="mb-2">
@@ -19,7 +17,6 @@ export default function InputField({ field, unit,name }: any) {
         </InputGroup.Text>
         <Form.Control
           id="inlineFormInputGroup"
-          name={field}
           style={{
             background: Color.form_background_text,
             border: `none`,
@@ -28,8 +25,8 @@ export default function InputField({ field, unit,name }: any) {
             fontSize: `14px`,
           }}
           className="custominput pt-2 pb-2"
-          type="number"
-
+          defaultValue={'Market'}
+          disabled
         />
         <InputGroup.Text
           style={{

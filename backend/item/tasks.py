@@ -1,7 +1,11 @@
 from django.http import HttpResponse
+from django.db.models import Max, F, Q
+from django.core.cache import cache
+from backend.order.constants import CachePreferences
+from order.models import BuyOrder
 from celery import Celery, shared_task
 from celery.schedules import crontab
-from .models import Item
+from item.models import Item, PriceRecord
 
 app = Celery('tasks', backend='redis://127.0.0.1:6379', broker='redis://127.0.0.1:6379')
 app.conf.broker_url = 'redis: //127.0.0.1:6379/0'
@@ -20,25 +24,13 @@ def setup_periodic_tasks(sender, **kwargs):
         crontab(hour=7, minute=30, day_of_week=1),
         test.s('Happy Mondays!'),
     )
-
-
-@app.task
-def test(arg):
-    print(arg)
-
-
-@app.task
-def add(x, y):
-    z = x + y
-    print(z)
     
-
-
-@app.task
-def createItem():
-    item = Item.objects.create()
+    sender.add_periodic_task(
+        crontab(hour=0, minute=1),
+        updateDayLastRecord(),
+    )
     
-
+    
 
 @shared_task(bind=True)
 def test_func(self):
@@ -46,4 +38,8 @@ def test_func(self):
         print(i)
     print('Done')
 
-
+@shared_task(bind=True)
+def updateDayLastRecord():
+    records = PriceRecord.objects.values('item', 'price').annotate(name=F('item__name')).distinct('item').order_by('item', '-datetime')
+    for record in records:
+        cache.set(record['name']+CachePreferences.ITEM_24H_LAST_PRICE, record['price'])
