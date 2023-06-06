@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import NameRegister from '../../components/auth/NameRegister'
 import { User } from '../../constants/types'
 import axios, { AxiosError } from 'axios'
-import account from '../../client/axios'
+import {account} from '../../client/axios'
 import APIS from '../../constants/api'
 import { Color } from '../../constants/Color'
 export default function SignUpForm() {

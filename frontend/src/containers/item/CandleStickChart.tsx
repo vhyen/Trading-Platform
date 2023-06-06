@@ -278,7 +278,7 @@ export default function CandleStickChart({
       onMouseMove={onMouseMoveInside}
       onClick={onMouseClickInside}
       onMouseLeave={onMouseLeave}
-      style={{backgroundColor: Color.primary}}
+      style={{backgroundColor: Color.grey}}
 
     >
 

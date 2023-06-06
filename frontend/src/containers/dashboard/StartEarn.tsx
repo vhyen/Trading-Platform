@@ -34,7 +34,7 @@ export default function StartEarn() {
       </style>
       <Container fluid className="d-inline-flex flex-column align-items-center justify-content-center start-earn mt-5">
             <p className="text-center">Start earn today</p>
-            <NavLink to="/signup" className="btn-start-earn "><p className="text-center m-2">Sign Up Now</p></NavLink>
+            <NavLink to="/signup" className="btn-start-earn rounded"><p className="text-center m-2">Sign Up Now</p></NavLink>
       </Container>
     </>
   );

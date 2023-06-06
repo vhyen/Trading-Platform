@@ -1,23 +1,25 @@
 import django_filters
+from django.db.models import Sum
 from django_filters import rest_framework as filters
 from rest_framework import permissions
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
 from order.models import SellOrder
-from order.serializers.sell_order import SellOrderSerializer, CreateSellOrderSerializer
+from order.serializers.sell_order import SellOrderSerializer, CreateSellOrderSerializer, OrderBookSerializer
 
 
 class SellOrderFilter(filters.FilterSet):
-    created_at__gt = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
+    item = django_filters.CharFilter(field_name='item__name')
 
     class Meta:
         model = SellOrder
-        fields = ['created_at__gt']
+        fields = ['item']
 
 
 class SellOrderPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 15
     max_page_size = 100
 
 
@@ -29,11 +31,21 @@ class SellOrderViewSet(ModelViewSet):
     pagination_class = SellOrderPagination
     permission_classes = []
 
+    def get_queryset(self):
+        match self.action:
+            case 'order_book':
+                return self.queryset.filter(type='L').values('item__name', 'price') \
+                    .annotate(total_quantity=Sum('quantity'),
+                              total_filled=Sum('filled')).order_by('-price')
+            case _:
+                return self.queryset
 
     def get_serializer_class(self):
         match self.action:
             case "create":
                 return CreateSellOrderSerializer
+            case 'order_book':
+                return OrderBookSerializer
             case _:
                 return SellOrderSerializer
 
@@ -42,4 +54,9 @@ class SellOrderViewSet(ModelViewSet):
             case "create":
                 return [permissions.IsAuthenticated(),]
             case _:
-                return [permissions.AllowAny,]
+                return [permissions.AllowAny(),]
+
+
+    @action(methods=['GET'],detail=False)
+    def order_book(self,request):
+        return self.list(request)

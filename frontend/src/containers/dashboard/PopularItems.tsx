@@ -2,38 +2,21 @@ import { Col, Container, Row } from "react-bootstrap";
 import ItemRecord from "../../components/dashboard/ItemRecord";
 import { NavLink } from "react-router-dom";
 import { Color } from "../../constants/Color";
+import { useEffect, useState } from "react";
+import { item } from "../../client/axios";
+import APIS from "../../constants/api";
+import { Item, Pagination } from "../../constants/types";
 
 export default function PopularItems() {
-  const items = [
-    {
-      id: 0,
-      name: "BNB",
-      price: 309.1,
-      change: 0.0027,
-      marketcap: 12312421,
-    },
-    {
-      id: 1,
-      name: "JPY",
-      price: 102.2,
-      change: -0.0032,
-      marketcap: 424898023123,
-    },
-    {
-      id: 2,
-      name: "BNB",
-      price: 44.2,
-      change: 0.0021,
-      marketcap: 1221321324,
-    },
-    {
-      id: 3,
-      name: "ABC",
-      price: 6623.1,
-      change: -0.021,
-      marketcap: 14123123893,
-    },
-  ];
+  const [items,setItems]=useState<Item[]>([])
+
+  useEffect(()=>{
+    item.get<Pagination<Item>>(`${APIS.GET_ITEM}popular`)
+    .then((response)=>{
+      console.log(response.data.count)
+      setItems(response.data.results)
+    })
+  },[])
   return (
     <>
     <style className="text/css">
@@ -74,8 +57,8 @@ export default function PopularItems() {
           <p className="fw-bold text-end">Market Cap </p>
         </Col>
       </Row>
-      {items.map((item: any) => {
-        return <ItemRecord key={item.id} item={item} />;
+      {items?.map((item: Item) => {
+        return <ItemRecord key={item.uuid} item={item} />;
       })}
     </Container>
     </>

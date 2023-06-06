@@ -2,15 +2,15 @@ import { Form, InputGroup } from "react-bootstrap";
 import { Color } from "../../../constants/Color";
 
 
-export default function InputField({ field, unit,name }: any) {
+export default function InputField({ field,name, unit, handleChange }: any) {
 
   return (
     <>
-      <InputGroup className="mb-2">
+      <InputGroup className="custom-input-group mb-2">
         <InputGroup.Text
           style={{
-            background: Color.form_background_text,
-            color: Color.form_text_second,
+            background: Color.grey,
+            color: Color.primary,
             fontSize: `14px`,
             border: `none`,
         }}
@@ -18,23 +18,22 @@ export default function InputField({ field, unit,name }: any) {
           {field}
         </InputGroup.Text>
         <Form.Control
-          id="inlineFormInputGroup"
-          name={field}
+          name={name}
           style={{
-            background: Color.form_background_text,
+            background: Color.grey,
             border: `none`,
             textAlign: `end`,
-            color: Color.form_text_primary,
+            color: Color.primary,
             fontSize: `14px`,
           }}
           className="custominput pt-2 pb-2"
           type="number"
-
+          onChange={(e)=>{handleChange(e)}}
         />
         <InputGroup.Text
           style={{
-            background: Color.form_background_text,
-            color: Color.form_text_primary,
+            background: Color.grey,
+            color: Color.primary,
             fontSize: `14px`,
             border: `none`,
             width: `4rem`,

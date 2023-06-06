@@ -4,11 +4,10 @@ import { DashBoard, ItemDetail, LogInPage, News, SignUpPage, Wallet } from './pa
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './redux/store';
 import LOCAL_STORAGE_KEYS from './constants/local_storage';
-import client from './client/axios';
 import { Account } from './constants/types';
 import APIS from './constants/api';
 import { removeToken, setAccount, setToken } from './redux/user/slice';
-import LoginInPage from './pages/LogInPage';
+import { account, item, order } from './client/axios';
 
 function UnAuthenticatedApp() {
   return (
@@ -17,7 +16,7 @@ function UnAuthenticatedApp() {
         <Route path='/signup' element={<SignUpPage/>}/>
         <Route path='/login' element={<LogInPage/>}/>
         <Route path='/about' element={<DashBoard/>}/>
-        <Route path='/item' element={<ItemDetail/>}/>
+        <Route path='/item/:item_id' element={<ItemDetail/>}/>
         <Route path='/wallet' element={<Wallet/>}/> 
         <Route path='/news' element={<News/>}/>
     </Routes>
@@ -29,7 +28,7 @@ function AuthenticatedApp() {
     <Routes>
         <Route path='/' element={<DashBoard/>}/>
         <Route path='/about' element={<DashBoard/>}/>
-        <Route path='/item' element={<ItemDetail/>}/>
+        <Route path='/item/:item_id' element={<ItemDetail/>}/>
         <Route path='/wallet' element={<Wallet/>}/> 
         <Route path='/news' element={<News/>}/>
     </Routes>
@@ -43,8 +42,7 @@ function App() {
 
   useEffect(() => {
     if (user.account || !token) return;
-    client
-      .get<Account>(APIS.GET_ACCOUNT, {
+    account.get<Account>(APIS.GET_ACCOUNT, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -52,7 +50,9 @@ function App() {
       .then((response) => {
         dispatch(setToken(token));
         dispatch(setAccount(response.data));
-        client.defaults.headers.common.Authorization = `Token ${token}`;
+        account.defaults.headers.common.Authorization = `Token ${token}`
+        order.defaults.headers.common.Authorization = `Token ${token}`
+        item.defaults.headers.common.Authorization = `Token ${token}`
       })
       .catch(() => {
         dispatch(removeToken());

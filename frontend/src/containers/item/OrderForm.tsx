@@ -4,25 +4,39 @@ import OrderLimitForm from "./OrderLimitForm";
 import OrderMarketForm from "./OrderMarketForm";
 import { Color } from "../../constants/Color";
 
-export default function OrderForm() {
+export default function OrderForm({item,setShow ,setNotification}:any) {
   const tabs = ["Limit", "Market"];
-  
-
-
   return (
     <>
-      <Tabs px={0} backgroundColor={Color.form_background_main}>
-        <TabList className="mx-4 my-3">
+      <style className="text/css">
+        {`    
+             .custominput:focus {
+                   outline:0;
+                   border:none;
+                   box-shadow: none;
+            }
+            .custom-input-group{
+              border:1px solid ${Color.grey};
+              border-radius:7px;
+            }
+            .custom-input-group:hover{
+              border:1px solid ${Color.main};
+              border-radius:7px;
+            }
+      `}
+      </style>
+      <Tabs px={0} backgroundColor={Color.grey}>
+        <TabList>
           {tabs.map((tab) => (
             <Tab
               key={tab}
               color={Color.form_text_second}
-              backgroundColor={"transparent"}
-              border={"none"}
-              _selected={{ color: Color.main }}
-              className="ps-0 me-3"
+              border={'none'}
+              borderRadius={'10px 10px 0px 0px'}
+              _selected={{ color: Color.main , backgroundColor:Color.white}}
+              className="px-3"
             >
-              {tab}
+              <p className="my-1" style={{width:'80px'}}>{tab}</p>
             </Tab>
           ))}
         </TabList>
@@ -32,16 +46,18 @@ export default function OrderForm() {
             <Row className="m-0">
               <Col className="p-0">
                 <OrderLimitForm
-                  button="Sell"
-                  coin_unit="SJK"
-                  price_unit="USDT"
+                  type="B"
+                  item={item}
+                  setShow={setShow}
+                  setNotification={setNotification}
                 />
               </Col>
               <Col className="p-0">
                 <OrderLimitForm
-                  button="Buy"
-                  coin_unit="SJK"
-                  price_unit="USDT"
+                  type="S"
+                  item={item}
+                  setShow={setShow}
+                  setNotification={setNotification}
                 />
               </Col>
             </Row>
@@ -50,16 +66,18 @@ export default function OrderForm() {
             <Row className="m-0">
               <Col className="p-0">
                 <OrderMarketForm
-                  button="Sell"
-                  coin_unit="SJK"
-                  price_unit="USDT"
+                  type="B"
+                  item={item}
+                  setShow={setShow}
+                  setNotification={setNotification}
                 />
               </Col>
               <Col className="p-0">
                 <OrderMarketForm
-                  button="Buy"
-                  coin_unit="SJK"
-                  price_unit="USDT"
+                  type="S"
+                  item={item}
+                  setShow={setShow}
+                  setNotification={setNotification}
                 />
               </Col>
             </Row>

@@ -1,20 +1,42 @@
 import { Col, Container, Row } from "react-bootstrap";
 import OrderBook from "../containers/item/OrderBook";
 import CandleStickChart from "../containers/item/CandleStickChart";
-import { NavBar } from "../containers/bars";
+import { Footer, NavBar } from "../containers/bars";
 import OrderForm from "../containers/item/OrderForm";
-
+import { useEffect, useState } from "react";
+import NotificationToast from "../components/item/NotificationToast";
+import { Item, Notification } from "../constants/types";
+import { useParams } from "react-router-dom";
+import APIS from "../constants/api";
+import { item } from "../client/axios";
 
 export default function ItemDetail() {
+  const {item_id} = useParams()
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState<Notification>();
+  const [ItemDetail,setItemDetail] = useState<Item>()
+  useEffect(()=>{
+      item.get<Item>(APIS.GET_ITEM+item_id)
+      .then((response)=>{
+        console.log(response.data)
+        setItemDetail(response.data)
+      })
+  },[item_id])
   return (
-    <>
+    <div
+      className="vh-100"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <NavBar />
-      <Container fluid className="p-0">
-        <Row>
+      <Container style={{ flex: 1 }} className="m-0 p-0">
+        <Row> 
           <Col sm={3}>
-            <OrderBook />
+            <OrderBook item={ItemDetail}/>
           </Col>
-          <Col sm={9} id="colchart">
+          <Col sm={9} className="p-0 border">
             <Container>
               <Row>
                 <CandleStickChart
@@ -23,14 +45,22 @@ export default function ItemDetail() {
                   highest={33288}
                   lowest={384}
                 />
-              </Row>
-              <Row>
-                <OrderForm/>
+                <OrderForm
+                  item={ItemDetail}
+                  setShow={setShow}
+                  setNotification={setNotification}
+                />
               </Row>
             </Container>
           </Col>
         </Row>
+        <NotificationToast
+          show={show}
+          setShow={setShow}
+          notification={notification}
+        />
       </Container>
-    </>
+      <Footer />
+    </div>
   );
 }

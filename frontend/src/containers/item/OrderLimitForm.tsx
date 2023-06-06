@@ -1,6 +1,12 @@
 import { Button, Col, Form } from "react-bootstrap";
 import { Color } from "../../constants/Color";
 import InputField from "../../components/item/forms/InputField";
+import { useState } from "react";
+import { order } from "../../client/axios";
+import { Order } from "../../constants/types";
+import APIS from "../../constants/api";
+import PRICE_UNIT from "../../constants/common";
+
 // const navigate = useNavigate();
 
 // const [formData, setFormData] = useState({
@@ -14,25 +20,42 @@ import InputField from "../../components/item/forms/InputField";
 //   setFormData({ ...formData, [key]: value });
 // }
 
-export default function OrderLimitForm({ button, coin_unit, price_unit }: any) {
-
+export default function OrderLimitForm({ type, item,setShow,setNotification }: any) {
+  const [formData, setFormData] = useState({
+      price: 0,
+      amount: 0,
+    });
+  const onSubmit = (e:any) => {
+    e.preventDefault()
+    setShow(true)
+    setNotification({status:true,header:'Order',content:'Create order success'})
+    console.log(formData)
+    const api = (type=='S') ? APIS.SELL_ORDER : (type=='B') ? APIS.BUY_ORDER : '';
+    order.post<Order>(api , {
+      price: formData.price,
+      quantity: formData.amount,
+      item:item.uuid,
+      type:'L'
+    })
+    .then((response) => {
+      setFormData({
+        price: 0,
+        amount: 0,
+      })
+    })
+  }
+  const handleChange = (e : any) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    setFormData({ ...formData, [key]: value });
+  } 
   return (
     <>
-      <style className="text/css">
-        {`    
-             .custominput:focus {
-                   background-color:gray;
-                   outline:0;
-                   border-color:gray;
-                   border:none;
-                   box-shadow: none;
-            }
-      `}
-      </style>
       <Form
-        id="myForm"
+        id={type + 'limit'}
         className="px-4 pt-2 pb-4"
-        style={{ background: Color.form_background_main }}
+        style={{ background: Color.white }}
+        onSubmit={onSubmit}
       >
         <Form.Group as={Col}>
           <Form.Label
@@ -44,20 +67,21 @@ export default function OrderLimitForm({ button, coin_unit, price_unit }: any) {
           >
             Abvl
           </Form.Label>
-          <InputField field="Price" name="price" unit={price_unit} />
-          <InputField field="Amount" name="amount" unit={coin_unit} />
+          <InputField field="Price" name='price' handleChange={handleChange} unit={PRICE_UNIT} />
+          <InputField field="Amount" name='amount' handleChange={handleChange} unit={item?.name} />
         </Form.Group>
 
         <Button
           style={{
             width: `-webkit-fill-available`,
-            background: Color.form_background_text,
-            color: Color.main,
+            backgroundColor: type == 'S' ? Color.text_red : type == 'B'? Color.text_green :"",
+            color: Color.white,
             border: `none`,
           }}
           className="pt-2 pb-2"
+          type="submit"
         >
-          {button}
+          {type == 'S' && 'Sell' || type == 'B'&& 'Buy'}
         </Button>
       </Form>
     </>
