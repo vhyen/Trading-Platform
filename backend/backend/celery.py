@@ -1,6 +1,7 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
@@ -19,10 +20,9 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'print-hello-every-5-seconds': {
-        'task': 'item.tasks.test',
-        'schedule': 5,
-        'args': ("hello",),
-    }
+        'task': 'item.tasks.update_day_last_record',
+        'schedule': crontab(minute=0, hour=0),
+    },
 }
 
 
