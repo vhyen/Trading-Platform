@@ -6,7 +6,7 @@ import ListOfItems from './ListOfItems'
 import Notifications from './Notifications'
 
 const Content = () => {
-  const tabs = ['Curent Order', 'Items', 'Transactions']
+  const tabs = ['Items', 'Transactions', 'Current Orders']
 
   return (
     <Box
@@ -43,13 +43,13 @@ const Content = () => {
 
         <TabPanels px={3} mt={5}>
           <TabPanel>
-            <CurrentOrder />
-          </TabPanel>
-          <TabPanel>
             <ListOfItems />
           </TabPanel>
           <TabPanel>
             <Notifications />
+          </TabPanel>
+          <TabPanel>
+            <CurrentOrder />
           </TabPanel>
         </TabPanels>
       </Tabs>

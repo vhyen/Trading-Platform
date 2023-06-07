@@ -33,7 +33,3 @@
 * Item Detail
 * Payment ??
 
-
-### Task của yến
-* Làm wallet 
-* backend làm update price change 24h + caching (done, chua test update last price)

@@ -2,15 +2,8 @@ import { Img } from '@chakra-ui/react';
 import { Card, Col, Row } from 'react-bootstrap';
 import { Color } from '../../../constants/Color';
 
-interface OwnedItem {
-    name: string,
-    icon?: string,
-    amount?: number,
-    
-}
 
-
-export default function ItemInfo({item} : {item: any}) {
+export default function TransactionInfo({transaction} : any) {
     return (
             <Row 
             className="g-0 py-3" 
