@@ -11,6 +11,15 @@ class BuyOrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class OrderBookSerializer(serializers.ModelSerializer):
+    total_quantity = serializers.IntegerField()
+    total_filled = serializers.IntegerField()
+
+    class Meta:
+        model = BuyOrder
+        fields = ['price','total_quantity','total_filled']
+
+
 class CreateBuyOrderSerializer(serializers.ModelSerializer):
     def validate(self, data):
         supply = Item.objects.values_list("supply", flat=True).filter(name=data["item"])[0]

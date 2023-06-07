@@ -38,8 +38,8 @@ export default function Candle({
       <text
         x={x - 16}
         y={pixel_height - 16}
-        fill={Color.text_grey}
-        color={Color.text_grey}
+        fill={Color.primary}
+        color={Color.primary}
         fontSize={12}
       >
         {data.time}

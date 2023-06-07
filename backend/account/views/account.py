@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from account.models import Account
-from account.serializers.account import SignUpSerializer, SignInSerializer, AccountSerializer, GoogleSerializer
+from account.serializers.account import SignUpSerializer, SignInSerializer, AccountSerializer, GoogleSerializer, \
+    AccountSerializerBase
 
 
 class AccountViewSet(GenericViewSet):
@@ -41,7 +42,7 @@ class AccountViewSet(GenericViewSet):
         serializer.is_valid(raise_exception=True)
         user, token = serializer.sign_in()
         return Response({
-            'account': AccountSerializer(user).data,
+            'account': AccountSerializerBase(user).data,
             'token': token,
         })
 
@@ -51,7 +52,7 @@ class AccountViewSet(GenericViewSet):
         serializer.is_valid(raise_exception=True)
         user, token = serializer.sign_in_google()
         return Response({
-            'account': AccountSerializer(user).data,
+            'account': AccountSerializerBase(user).data,
             'token': token,
         })
 

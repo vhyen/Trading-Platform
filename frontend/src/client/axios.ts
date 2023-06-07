@@ -1,9 +1,16 @@
 import axios from 'axios'
-const baseURL = import.meta.env.VITE_BACKEND_URL
+const accountURL = import.meta.env.VITE_ACCOUNT_SERVICE_URL
+const orderURL = import.meta.env.VITE_ORDER_SERVICE_URL
+const itemURL =import.meta.env.VITE_ITEM_SERVICE_URL
 
-
-const client = axios.create({
-	baseURL: baseURL,
+const account = axios.create({
+	baseURL: accountURL,
 })
-export default client
+const order = axios.create({
+	baseURL: orderURL,
+})
+const item = axios.create({
+	baseURL:itemURL
+})
+export {account,order,item}
 

@@ -1,9 +1,8 @@
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import NavButton from "../../components/NavButton";
-import { useNavigate } from "react-router-dom";
+import Authenticate from "../../components/auth/Authenticated";
 
 export default function NavBar() {
-  const navigate = useNavigate()
   const NavList = [
     {
       id: 0,
@@ -58,13 +57,13 @@ export default function NavBar() {
           })}
           </Col>
           <Col sm={3}>
-          <Form.Control
+          {/* <Form.Control
           placeholder="Search"
           aria-label="Search"
           aria-describedby="basic-addon1"
-          />
+          /> */}
           </Col>
-          <Col sm={2}><Button onClick={()=>navigate("/login")}>Login</Button></Col>
+          <Authenticate/>
         </Row>
       </Container>
     </>
