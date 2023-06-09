@@ -7,7 +7,7 @@ import { User } from '../../constants/types'
 import axios, { AxiosError } from 'axios'
 import {account} from '../../client/axios'
 import APIS from '../../constants/api'
-import { Color } from '../../constants/Color'
+import { Color } from '../../constants/color'
 export default function SignUpForm() {
 	const navigate = useNavigate()
 

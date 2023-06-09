@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 
 export default function ItemRecord({item}: any) {
   return (

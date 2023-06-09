@@ -1,6 +1,6 @@
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
-import { Color } from '../../constants/Color';
+import { Color } from '../../constants/color';
 export default function NotificationToast({show,setShow,notification}:any) {
   return (
         <ToastContainer

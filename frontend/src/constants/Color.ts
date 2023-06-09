@@ -13,5 +13,6 @@ export enum Color{
     form_background_main="#1E2026",
     form_background_text="#292d35",
     success="#22BB33",
-    failed="#FA113D"
+    failed="#FA113D",
+    main_light='#FEF6D8'
 }

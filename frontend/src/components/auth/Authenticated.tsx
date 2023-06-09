@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import LOCAL_STORAGE_KEYS from "../../constants/local_storage";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { removeAccount, removeToken } from "../../redux/user/slice";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import { GiftFilled } from "@ant-design/icons";
 import { FaUserCircle } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";

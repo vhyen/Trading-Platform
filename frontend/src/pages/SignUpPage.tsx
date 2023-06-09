@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SignUpForm from "../containers/auth/SignUpForm";
-import { Color } from "../constants/Color";
+import { Color } from "../constants/color";
 import { NavLink } from "react-router-dom";
 import Image from 'react-bootstrap/Image'
 

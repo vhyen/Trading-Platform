@@ -1,5 +1,5 @@
 import { Form, InputGroup } from "react-bootstrap";
-import { Color } from "../../../constants/Color";
+import { Color } from "../../../constants/color";
 import PRICE_UNIT from "../../../constants/common";
 
 export default function MarktePriceField({ field }: any) {

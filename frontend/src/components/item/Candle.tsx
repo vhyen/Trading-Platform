@@ -1,4 +1,4 @@
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 
 export default function Candle({
   data,

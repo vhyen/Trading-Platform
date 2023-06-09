@@ -6,7 +6,7 @@ export default function CarouselItem() {
     const images = [
         {
             id: 0,
-            source: "logo.png",
+            source: "carousel0.png",
             content: "a.png"
         },
         {
@@ -16,7 +16,7 @@ export default function CarouselItem() {
         },
         {
             id: 2,
-            source: "c.png",
+            source: "carousel2.png",
             content: "c.png"
         },
     ]

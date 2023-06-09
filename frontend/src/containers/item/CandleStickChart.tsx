@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Candle from "../../components/item/Candle";
 import CrossHair from "../../components/item/CrossHair";
 import YCordinate from "../../components/item/YCordinate";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 
 // interface ChartProps {
 //   candles: ICandle[];

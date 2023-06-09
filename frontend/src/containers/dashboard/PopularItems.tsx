@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import ItemRecord from "../../components/dashboard/ItemRecord";
 import { NavLink } from "react-router-dom";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import { useEffect, useState } from "react";
 import { item } from "../../client/axios";
 import APIS from "../../constants/api";

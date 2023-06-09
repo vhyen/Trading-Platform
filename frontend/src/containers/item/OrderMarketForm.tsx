@@ -1,5 +1,5 @@
 import { Button, Col, Form } from "react-bootstrap";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import InputField from "../../components/item/forms/InputField";
 import MarktePriceField from "../../components/item/forms/MarketPriceField";
 import APIS from "../../constants/api";
@@ -15,8 +15,6 @@ export default function OrderMarketForm({type, item ,setShow,setNotification }: 
   });
   const onSubmit = (e:any) => {
   e.preventDefault()
-  setShow(true)
-  setNotification({status:true,header:'Order',content:'Create order success'})
   console.log(formData)
   const api = (type=='S') ? APIS.SELL_ORDER : (type=='B') ? APIS.BUY_ORDER : '';
   order.post<Order>(api , {
@@ -26,10 +24,8 @@ export default function OrderMarketForm({type, item ,setShow,setNotification }: 
     type:'M'
   })
   .then((response) => {
-    setFormData({
-      price: 0,
-      amount: 0,
-    })
+    setShow(true)
+    setNotification({status:true,header:'Order',content:'Create order success'})
   })
 }
 const handleChange = (e : any) => {

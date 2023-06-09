@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Color } from "../constants/Color";
+import { Color } from "../constants/color";
 
 export default function NavButton({ text, to }: any) {
   return (

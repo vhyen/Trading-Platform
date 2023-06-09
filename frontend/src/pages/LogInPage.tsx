@@ -4,8 +4,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import { NavLink } from 'react-router-dom'
-import { Color } from '../constants/Color'
+import { Color } from '../constants/color'
 import LoginForm from '../containers/auth/LoginForm'
+
 
 export default function LoginInPage() {
 	return (

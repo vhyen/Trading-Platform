@@ -2,7 +2,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { Row, Col } from "react-bootstrap";
 import OrderLimitForm from "./OrderLimitForm";
 import OrderMarketForm from "./OrderMarketForm";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 
 export default function OrderForm({item,setShow ,setNotification}:any) {
   const tabs = ["Limit", "Market"];

@@ -1,5 +1,5 @@
 import { Form, InputGroup } from "react-bootstrap";
-import { Color } from "../../../constants/Color";
+import { Color } from "../../../constants/color";
 
 
 export default function InputField({ field,name, unit, handleChange }: any) {

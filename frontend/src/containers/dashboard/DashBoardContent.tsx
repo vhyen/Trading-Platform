@@ -7,10 +7,12 @@ import StartEarn from "./StartEarn";
 export default function DashBoardContent() {
   return (
     <div style={{ flex: 1 }}>
-      <Container>
+      <Container fluid className="p-0">
         <TotalInfo />
+        <Container>
         <CarouselItem />
         <PopularItems />
+        </Container>
       </Container>
       <StartEarn/>
     </div>

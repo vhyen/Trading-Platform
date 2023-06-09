@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 import OrderRecord from "./OrderRecord";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 
 export default function BuyOrderTable({ records }: any) {
     return (

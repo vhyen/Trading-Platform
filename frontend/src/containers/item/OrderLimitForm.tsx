@@ -1,5 +1,5 @@
 import { Button, Col, Form } from "react-bootstrap";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import InputField from "../../components/item/forms/InputField";
 import { useState } from "react";
 import { order } from "../../client/axios";
@@ -38,10 +38,8 @@ export default function OrderLimitForm({ type, item,setShow,setNotification }: a
       type:'L'
     })
     .then((response) => {
-      setFormData({
-        price: 0,
-        amount: 0,
-      })
+      setShow(true)
+      setNotification({status:true,header:'Order',content:'Create order success'})
     })
   }
   const handleChange = (e : any) => {

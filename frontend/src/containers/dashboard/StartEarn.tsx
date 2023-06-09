@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import { NavLink } from "react-router-dom";
 
 export default function StartEarn() {
@@ -19,7 +19,6 @@ export default function StartEarn() {
                 color:${Color.primary};
                 font-size: 1.2rem;
                 font-weight:normal;
-                width:20%;
                 border:none;
             }
             .btn-start-earn:hover{
@@ -27,14 +26,13 @@ export default function StartEarn() {
                 color:${Color.muted};
                 font-size: 1.2rem;
                 font-weight:normal;
-                width:20%;
                 border:none;
             }
         `}
       </style>
       <Container fluid className="d-inline-flex flex-column align-items-center justify-content-center start-earn mt-5">
             <p className="text-center">Start earn today</p>
-            <NavLink to="/signup" className="btn-start-earn rounded"><p className="text-center m-2">Sign Up Now</p></NavLink>
+            <NavLink to="/signup" className="btn-start-earn rounded"><p className="text-center p-2 px-5 m-0">Sign Up Now</p></NavLink>
       </Container>
     </>
   );

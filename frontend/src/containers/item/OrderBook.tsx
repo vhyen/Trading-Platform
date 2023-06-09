@@ -1,7 +1,7 @@
 import { Container, Table } from "react-bootstrap";
 import BuyOrderTable from "../../components/item/BuyOrderTable";
 import SellOrderTable from "../../components/item/SellOrderTable";
-import { Color } from "../../constants/Color";
+import { Color } from "../../constants/color";
 import { useEffect, useState } from "react";
 import { Pagination,Record } from "../../constants/types";
 import { order } from "../../client/axios";

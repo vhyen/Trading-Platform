@@ -9,7 +9,8 @@ import APIS from '../../constants/api'
 import LOCAL_STORAGE_KEYS from '../../constants/local_storage'
 import { setToken } from '../../redux/user/slice'
 import axios, { AxiosError } from 'axios'
-import { Color } from '../../constants/Color'
+import { Color } from '../../constants/color'
+import GoogleLoginButton from '../../components/auth/GoogleLoginButton'
 
 
 export default function SignInForm() {
@@ -135,16 +136,17 @@ export default function SignInForm() {
 							type="primary"
 							htmlType="submit"
 							size="large"
+							className='w-100 rounded'
 							style={{
-								borderRadius: 20,
-								width: '60%',
 								backgroundColor:Color.main,
 								color:Color.primary,
-								fontWeight:"bold"
+								fontWeight:"bold",
+								marginBottom:20
 							}}
 						>
 							Login
 						</Button>
+						<GoogleLoginButton/>
 					</Form.Item>
 				</Form>
 			</Container>
