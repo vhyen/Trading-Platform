@@ -1,4 +1,4 @@
-import { Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import ItemInfo from './ItemInfo'
 
 export default function ListOfItems() {
@@ -24,6 +24,7 @@ export default function ListOfItems() {
     {
       id: '3', 
       name: 'item3', 
+      icon: 'https://api.dicebear.com/6.x/bottts/svg?seed=Buster&size=52',
       description: 'des3', 
       provider: 'provB', 
       currentPrice: 11,
@@ -34,6 +35,7 @@ export default function ListOfItems() {
       id: '4', 
       name: 'item4', 
       description: 'des4', 
+      icon: 'https://api.dicebear.com/6.x/bottts/svg?seed=Buster&size=52',
       provider: 'provB', 
       currentPrice: 8,
       amount: 3,

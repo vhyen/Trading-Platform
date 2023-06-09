@@ -1,12 +1,10 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
-import CurrentOrder from './CurrentOrder'
-import Actions from './Actions'
-import ListOfItems from './ListOfItems'
-import Notifications from './Notifications'
+import ListOfItems from "./ListOfItems";
+import OwnedTransactions from "./OwnedTransactions";
 
-const Content = () => {
-  const tabs = ['Items', 'Transactions', 'Current Orders']
+const Content = ({data}:any) => {
+  const tabs = ["Items", "Transactions"];
 
   return (
     <Box
@@ -20,11 +18,11 @@ const Content = () => {
       rounded="md"
       borderWidth={1}
       borderColor="gray.200"
-      style={{ transform: 'translateY(-100px)' }}
+      style={{ transform: "translateY(-100px)" }}
     >
       <Tabs>
         <TabList px={5}>
-          {tabs.map(tab => (
+          {tabs.map((tab) => (
             <Tab
               key={tab}
               mx={3}
@@ -33,8 +31,8 @@ const Content = () => {
               fontWeight="semibold"
               color="brand.cadet"
               borderBottomWidth={1}
-              _active={{ bg: 'transparent' }}
-              _selected={{ color: 'brand.dark', borderColor: 'brand.blue' }}
+              _active={{ bg: "transparent" }}
+              _selected={{ color: "brand.dark", borderColor: "brand.blue" }}
             >
               {tab}
             </Tab>
@@ -46,17 +44,12 @@ const Content = () => {
             <ListOfItems />
           </TabPanel>
           <TabPanel>
-            <Notifications />
-          </TabPanel>
-          <TabPanel>
-            <CurrentOrder />
+            <OwnedTransactions transactions={data?.transaction}/>
           </TabPanel>
         </TabPanels>
       </Tabs>
-
-      <Actions />
     </Box>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;

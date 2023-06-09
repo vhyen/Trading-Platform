@@ -1,6 +1,8 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import NavButton from "../../components/NavButton";
 import Authenticate from "../../components/auth/Authenticated";
+import { useAppSelector } from "../../redux/store";
+import logo from '../../../public/logo.png'
 
 export default function NavBar() {
   const NavList = [
@@ -25,6 +27,8 @@ export default function NavBar() {
       to: "/news",
     },
   ];
+  const account = useAppSelector((state) => state.user.account)
+  
   return (
     <>
       <style className="text/css">
@@ -46,15 +50,15 @@ export default function NavBar() {
         <Row className=" h-100 w-100 align-items-center px-5">
           <Col className="h-100 col-sm-2">
           <Button variant="nav">
-              <img src="logo.png" alt="Logo" style={{ height: "100%" }} />
+              <img src={logo} alt="Logo" style={{ height: "100%" }} />
             </Button>
           </Col>
           <Col className="h-100">
-          {NavList.map((nav: any) => {
-            return (
-                <NavButton key={nav.id} text={nav.text} to={nav.to} />
-            );
-          })}
+          {
+          NavList.map((nav: any) => 
+                (nav.id == 2 && account == undefined) ? <></> : <NavButton key={nav.id} text={nav.text} to={nav.to}/>
+        )
+        }
           </Col>
           <Col sm={3}>
           {/* <Form.Control
