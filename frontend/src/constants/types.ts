@@ -27,6 +27,14 @@ interface Item {
   change24: number;
   provider: string;
 }
+
+interface News{
+	id:number,
+	title: string,
+	content:string,
+	created_at:string
+}
+
 interface User {
   token: string | undefined;
   account: Account | undefined;

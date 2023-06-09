@@ -35,4 +35,4 @@ if APP_ENV == 'account':
     urlpatterns += [path('',include('account.urls'))]
 
 if APP_ENV == 'news':
-    urlpatterns += [path('', include('news.urls'))]
+    urlpatterns += [path('news/', include('news.urls'))]
