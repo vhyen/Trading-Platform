@@ -3,7 +3,7 @@ interface Account {
   last_name: string;
   username: string;
   email: string;
-  banlance: number;
+  balance: number;
   type: string;
 }
 

@@ -1,6 +1,8 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
+import { AccountDetail } from "../../../constants/types";
 
-function Data({ data }: any) {
+function Data( {data} : {data: AccountDetail | undefined}) {
+  if (data == undefined) return (<></>);
 
   const list = [
     {

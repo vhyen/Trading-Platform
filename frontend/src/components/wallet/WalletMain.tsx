@@ -8,8 +8,8 @@ import { AccountDetail } from '../../constants/types';
 
 export default function ProfileMain() {
   const [data, setData] = useState<AccountDetail>();
-  // const token = '716caf13eb4bc2bad4688a5aa392cb007054bfcf'
-  // console.log(APIS.GET_ACCOUNT)
+  const token = '716caf13eb4bc2bad4688a5aa392cb007054bfcf'
+  console.log(APIS.GET_ACCOUNT)
   useEffect(() => {
     account.get<AccountDetail>(APIS.GET_ACCOUNT).then(
       (res) => {
@@ -21,7 +21,7 @@ export default function ProfileMain() {
   
   return (
     <Container display={{ base: 'block', md: 'flex' }} maxW="container.xl">
-      <Sidebar />
+      <Sidebar data={data}/>
       <Content data={data}/>
     </Container>
   )

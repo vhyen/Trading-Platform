@@ -18,7 +18,7 @@ function UnAuthenticatedApp() {
         <Route path='/login' element={<LogInPage/>}/>
         <Route path='/about' element={<DashBoard/>}/>
         <Route path='/item/:item_id' element={<ItemPage/>}/>
-        <Route path='/wallet' element={<Wallet/>}/> 
+        {/* <Route path='/wallet' element={<Wallet/>}/>  */}
         <Route path='/news' element={<News/>}/>
     </Routes>
   )
