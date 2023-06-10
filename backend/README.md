@@ -35,15 +35,3 @@ export APP_ENV={app_name}
 python manage.py runserver {port_number}
 ```
 
-v
-lịch sử: 1 order/s
-demo với test: 5 orders/s
-
-+- 0.01%
-
-coin 1 debut price = 10\$ vs supply 100 market cap 1000\$ order sell
-
-person 1 mua 50 coin 10\$ = > 500\$ ai giu
-
-person 1 ban 40 coin gia 8\$
-person 2 mua 100 coin gia 8\$
