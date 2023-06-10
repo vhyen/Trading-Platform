@@ -1,10 +1,10 @@
 import { Box } from '@chakra-ui/react'
 
-import Actions from './Actions'
 import Data from './Data'
 import Profile from './Profile'
+import { AccountDetail } from '../../../constants/types'
 
-function Sidebar() {
+function Sidebar({data} : {data: AccountDetail | undefined}) {
   return (
     <Box
       as="aside"
@@ -18,8 +18,7 @@ function Sidebar() {
       style={{ transform: 'translateY(-100px)' }}
     >
       <Profile />
-      <Data />
-      <Actions />
+      <Data data={data}/>
     </Box>
   )
 }

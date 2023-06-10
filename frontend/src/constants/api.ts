@@ -7,7 +7,11 @@ const APIS = {
 	SELL_ORDER_BOOK: 'order/sell_order/order_book?item=',
 	BUY_ORDER: 'order/buy_order',
 	BUY_ORDER_BOOK: 'order/buy_order/order_book?item=',
-	GET_ITEM: 'item/item/'
+	GET_ITEM: 'item/item/',
+	GET_CANDLE_MINUTE: 'item/price_record/candle_minute',
+	GET_CANDLE_NOW_MINUTE: 'item/price_record/candle_now_minute',
+	GET_CANDLE_HOUR: 'item/price_record/candle_hour',
+	GET_CANDLE_NOW_HOUR: 'item/price_record/candle_now_hour',
 }
 
 export default APIS

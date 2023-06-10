@@ -8,6 +8,7 @@ import { Account } from './constants/types';
 import APIS from './constants/api';
 import { removeToken, setAccount, setToken } from './redux/user/slice';
 import { account, item, order } from './client/axios';
+import ItemPage from './pages/ItemPage';
 
 function UnAuthenticatedApp() {
   return (
@@ -16,8 +17,8 @@ function UnAuthenticatedApp() {
         <Route path='/signup' element={<SignUpPage/>}/>
         <Route path='/login' element={<LogInPage/>}/>
         <Route path='/about' element={<DashBoard/>}/>
-        <Route path='/item/:item_id' element={<ItemDetail/>}/>
-        <Route path='/wallet' element={<Wallet/>}/> 
+        <Route path='/item/:item_id' element={<ItemPage/>}/>
+        {/* <Route path='/wallet' element={<Wallet/>}/>  */}
         <Route path='/news' element={<News/>}/>
     </Routes>
   )
@@ -28,7 +29,7 @@ function AuthenticatedApp() {
     <Routes>
         <Route path='/' element={<DashBoard/>}/>
         <Route path='/about' element={<DashBoard/>}/>
-        <Route path='/item/:item_id' element={<ItemDetail/>}/>
+        <Route path='/item/:item_id' element={<ItemPage/>}/>
         <Route path='/wallet' element={<Wallet/>}/> 
         <Route path='/news' element={<News/>}/>
     </Routes>
@@ -39,7 +40,6 @@ function App() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN_KEY);
-
   useEffect(() => {
     if (user.account || !token) return;
     account.get<Account>(APIS.GET_ACCOUNT, {
@@ -48,6 +48,7 @@ function App() {
         },
       })
       .then((response) => {
+       
         dispatch(setToken(token));
         dispatch(setAccount(response.data));
         account.defaults.headers.common.Authorization = `Token ${token}`

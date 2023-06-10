@@ -1,18 +1,19 @@
 import { Color } from "../../constants/color";
+import { ICandle } from "../../constants/types";
 
 export default function Candle({
-  data,
+  candle,
   x,
   candle_width,
   pixelFor,
   pixel_height,
-}: any) {
-  const up = data.close > data.open;
-  const bar_top = pixelFor(up ? data.open : data.close);
-  const bar_bottom = pixelFor(up ? data.close : data.open);
+}: {candle: ICandle, x: number, candle_width: number, pixelFor:any, pixel_height:number}) {
+  const up = candle.close > candle.open;
+  const bar_top = pixelFor(up ? candle.open : candle.close);
+  const bar_bottom = pixelFor(up ? candle.close : candle.open);
   const bar_height = Math.abs(bar_top - bar_bottom);
-  const wick_top = pixelFor(data.high);
-  const wick_bottom = pixelFor(data.low);
+  const wick_top = pixelFor(candle.highest);
+  const wick_bottom = pixelFor(candle.lowest);
   const color = up ? Color.text_green : Color.text_red;
 
   return (
@@ -42,7 +43,7 @@ export default function Candle({
         color={Color.primary}
         fontSize={12}
       >
-        {data.time}
+        {candle.date}
       </text>
 
       <line

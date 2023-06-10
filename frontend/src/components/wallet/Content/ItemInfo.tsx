@@ -1,29 +1,51 @@
+import { Img } from '@chakra-ui/react';
 import { Card, Col, Row } from 'react-bootstrap';
+import { Color } from '../../../constants/Color';
 
-export default function ItemInfo({item} : {item: any}) {
+interface OwnedItem {
+    name: string,
+    icon?: string,
+    amount?: number,
+}
+
+
+export default function ItemInfo({item, icon} : any) {
     return (
-        <Card className="mb-3" style={{maxWidth: 'inherited', maxHeight: '540px'}}>
-            <Row className="g-0">
-                <Col md={4}>
-                    <Card.Img 
-                        src={item.slug} 
+            <Row 
+            className="g-0 py-3" 
+            style={{
+                backgroundColor: Color.form_text_primary,
+                marginBottom: '8px',
+                alignSelf: 'center',
+                borderRadius: '10px',
+                paddingLeft: '10%',
+                paddingRight: '10%',
+            }}
+            >
+                <Col md={3}>
+                    <Img 
+                        src={icon}
                         className="img-fluid rounded-start" 
                         alt="Item Image"
-                        style={{maxHeight: '540px'}}
                     />
                 </Col>
-                <Col md={8}>
-                    <Card.Body>
-                        <Card.Title>{item.name}</Card.Title>
-                        <Card.Text as='div'>
-                            <p>{item.description}</p>
-                            <p>{item.currentPrice}</p>
-                            <p><small className="text-body-secondary">{item.provider}</small></p>       
-                        </Card.Text>
-                    </Card.Body>
+                <Col md={9}>
+                    
+                        <Row className='mx-0 h-100'>
+                            <Col className='d-flex align-content-between flex-wrap flex-column'>
+                            <Card.Title className='mb-1'>{item.item.name}</Card.Title>
+                            <p className="mb-0 text-body-secondary small">${item.item.current_price}</p>
+                            </Col>
+                            <Col style={{
+                                textAlign: 'end',
+                            }}>
+                            <Card.Title className='mb-1'>{item.quantity}</Card.Title>
+                            <p className="mb-0 text-body-secondary small">${item.quantity * item.item.current_price}</p>       
+                            </Col>
+                        </Row>
+                   
                 </Col>
             </Row>
-        </Card>
     )
 }
 

@@ -183,4 +183,5 @@ AUTH_USER_MODEL = 'account.Account'
 
 APP_ENV = os.environ.get('APP_ENV')
 
-CACHE_TTL = 60 * 15
+# 30 days
+CACHE_TTL = 60 * 24 * 30
