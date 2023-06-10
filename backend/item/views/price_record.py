@@ -32,16 +32,19 @@ def candle_query(price):
 
 
 def candle_minute_query(item, space):
+    now = datetime.now().hour - 4
+    print(now)
     price_minute = PriceRecord.objects \
-        .filter(item__name=item) \
+        .filter(item__name=item,datetime__day=datetime.now().day, datetime__hour__gte=now) \
         .annotate(date=Concat(F('datetime__date'), Value("-"), ExtractHour("datetime"), output_field=CharField()),
                   closest_space=Floor(ExtractMinute("datetime") / space))
     return candle_query(price_minute)
 
 
 def candle_hour_query(item, space):
+    now = datetime.now().day
     price_hour = PriceRecord.objects \
-        .filter(item__name=item) \
+        .filter(item__name=item,datetime__day=now) \
         .annotate(date=F("datetime__date"), closest_space=Floor(ExtractHour("datetime") / space))
     return candle_query(price_hour)
 

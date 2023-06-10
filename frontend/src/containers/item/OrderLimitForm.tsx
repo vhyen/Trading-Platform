@@ -6,6 +6,7 @@ import { order } from "../../client/axios";
 import { Order } from "../../constants/types";
 import APIS from "../../constants/api";
 import PRICE_UNIT from "../../constants/common";
+import { useAppSelector } from "../../redux/store";
 
 // const navigate = useNavigate();
 
@@ -25,7 +26,14 @@ export default function OrderLimitForm({ type, item,setShow,setNotification }: a
       price: 0,
       amount: 0,
     });
+  const account = useAppSelector((state) => state.user.account);
   const onSubmit = (e:any) => {
+    if (account == undefined)
+    {
+      setShow(true)
+    setNotification({status:false,header:'Order',content:'You need login'})
+    return;
+    }
     e.preventDefault()
     setShow(true)
     setNotification({status:true,header:'Order',content:'Create order success'})

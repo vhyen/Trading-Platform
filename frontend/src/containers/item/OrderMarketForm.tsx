@@ -6,6 +6,7 @@ import APIS from "../../constants/api";
 import { useState } from "react";
 import { order } from "../../client/axios";
 import { Order } from "../../constants/types";
+import { useAppSelector } from "../../redux/store";
 
 
 export default function OrderMarketForm({type, item ,setShow,setNotification }: any) {
@@ -13,7 +14,14 @@ export default function OrderMarketForm({type, item ,setShow,setNotification }: 
     price: 0,
     amount: 0,
   });
+  const account = useAppSelector((state) => state.user.account);
   const onSubmit = (e:any) => {
+    if (account == undefined)
+    {
+      setShow(true)
+    setNotification({status:false,header:'Order',content:'You need login'})
+    return;
+    }
   e.preventDefault()
   console.log(formData)
   const api = (type=='S') ? APIS.SELL_ORDER : (type=='B') ? APIS.BUY_ORDER : '';

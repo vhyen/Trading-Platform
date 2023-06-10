@@ -18,7 +18,7 @@ export default function ItemRecord({item}: any) {
             }
         `}
     </style>
-      <NavLink to="/a" className="item-record">
+      <NavLink to={`/item/${item.uuid}`} className="item-record">
         <Row className="py-1 align-items-center my-1 py-4" style={{backgroundColor:"inherit"}}>
           <Col className="d-inline-flex flex-row align-items-center">
             <p className="fw-bold m-0" style={{fontSize:"1.2rem"}}>{item.name}</p>
@@ -30,7 +30,7 @@ export default function ItemRecord({item}: any) {
           <Col>
             <p className="m-0 text-center" style={{ color: Number(item.change24)< 0 ? "red" : "green" }}>
               {item.change24 > 0 ? "+" : ""}
-              {item.change24 * 100}%
+              {item.change24}%
             </p>
             
           </Col>

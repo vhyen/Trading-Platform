@@ -1,5 +1,5 @@
 import DashBoard from "./DashBoard";
-import ItemDetail from "./ItemDetail";
+import ItemDetail from "../containers/ItemDetail";
 import Wallet from "./Wallet";
 import News from "./News";
 import LogInPage from "./LogInPage";

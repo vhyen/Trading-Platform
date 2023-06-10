@@ -28,6 +28,41 @@ export default function Candle({
         x2={x}
         y2={pixel_height - 36}
       />
+      {bar_height==0 ?
+      <> <rect
+        x={x - candle_width / 2 }
+        y={bar_bottom}
+        width={10}
+        height= {1}
+        fill={color}
+        stroke={color}
+      /> 
+      <rect
+        x={x - candle_width / 2 + 15}
+        y={bar_bottom}
+        width={10}
+        height= {1}
+        fill={color}
+        stroke={color}
+      /> 
+      <rect
+        x={x - candle_width / 2 + 30}
+        y={bar_bottom}
+        width={10}
+        height= {1}
+        fill={color}
+        stroke={color}
+      /> 
+      <rect
+        x={x - candle_width / 2 + 45}
+        y={bar_bottom}
+        width={7}
+        height= {1}
+        fill={color}
+        stroke={color}
+      /> 
+      
+      </>:
       <rect
         x={x - candle_width / 2}
         y={bar_bottom}
@@ -35,8 +70,8 @@ export default function Candle({
         height={bar_height}
         fill={color}
         stroke={color}
-      />
-      <text
+      />}
+      {/* <text
         x={x - 16}
         y={pixel_height - 16}
         fill={Color.primary}
@@ -44,7 +79,7 @@ export default function Candle({
         fontSize={12}
       >
         {candle.date}
-      </text>
+      </text> */}
 
       <line
         stroke={color}

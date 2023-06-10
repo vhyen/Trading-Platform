@@ -1,13 +1,14 @@
 import { Col, Container, Row } from "react-bootstrap";
-import OrderBook from "../containers/item/OrderBook";
-import CandleStickChart from "../containers/item/CandleStickChart";
-import OrderForm from "../containers/item/OrderForm";
+import OrderBook from "./item/OrderBook";
+import CandleStickChart from "./item/CandleStickChart";
+import OrderForm from "./item/OrderForm";
 import { useEffect, useState } from "react";
 import NotificationToast from "../components/item/NotificationToast";
 import { Item, Notification } from "../constants/types";
 import { useParams } from "react-router-dom";
 import APIS from "../constants/api";
 import { item } from "../client/axios";
+import { Color } from "../constants/color";
 
 export default function ItemDetail() {
   const {item_id} = useParams()
@@ -22,14 +23,14 @@ export default function ItemDetail() {
         setItemDetail(response.data)
       })
 
-  },[item_id]);
+  },[]);
 
 
   if (ItemDetail === undefined) return (<></>);
 
   return (
    
-      <Container style={{ flex: 1 }} className="m-0 p-0">
+      <Container fluid style={{ flex: 1 }} className="w-100 m-0 p-0">
         <Row> 
           <Col sm={3}>
             <OrderBook item={ItemDetail}/>
@@ -53,6 +54,7 @@ export default function ItemDetail() {
             </Container>
           </Col>
         </Row>
+        <div style={{backgroundColor:Color.grey, height:'100px'}}/>
         <NotificationToast
           show={show}
           setShow={setShow}

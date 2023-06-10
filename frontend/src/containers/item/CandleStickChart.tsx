@@ -34,7 +34,7 @@ export default function CandleStickChart({
 
   useEffect(() => {
     item
-      .get<ICandle[]>(APIS.GET_CANDLE_HOUR + "?item=" + item_name + "&space=1")
+      .get<ICandle[]>(APIS.GET_CANDLE_MINUTE + "?item=" + item_name + "&space=2")
       .then((res) => {
         setCandles(res.data);
       });
@@ -71,7 +71,7 @@ export default function CandleStickChart({
 
   if (candles === undefined) return <></>;
 
-  const candle_width = Math.floor((chartWidth / candles.length) * 0.6);
+  const candle_width = 52;
 
   const chart_dims = {
     pixel_width: chartWidth,
@@ -85,11 +85,6 @@ export default function CandleStickChart({
   chart_dims["lowest"] = 0;
 
   const pixelFor = (dollar: any) => {
-    // return Math.abs(
-    //   ((dollar - chart_dims["lowest"]) / chart_dims["highest"]) *
-    //     chart_dims["pixel_height"] -
-    //     chart_dims["pixel_height"]
-    // );
 
     return (
       chart_dims.pixel_height -
@@ -147,7 +142,7 @@ export default function CandleStickChart({
           pixel_width={chart_dims.pixel_width}
         />
         {candles.map((candle, i) => {
-          const candle_x = (chartWidth / (candles.length + 1)) * (i + 1) - 20;
+          const candle_x = 20 + 54*i;
           return (
             <Candle
               key={i}
