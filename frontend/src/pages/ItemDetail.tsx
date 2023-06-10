@@ -1,7 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import OrderBook from "../containers/item/OrderBook";
 import CandleStickChart from "../containers/item/CandleStickChart";
-import { Footer, NavBar } from "../containers/bars";
 import OrderForm from "../containers/item/OrderForm";
 import { useEffect, useState } from "react";
 import NotificationToast from "../components/item/NotificationToast";
@@ -15,22 +14,21 @@ export default function ItemDetail() {
   const [show, setShow] = useState(false);
   const [notification, setNotification] = useState<Notification>();
   const [ItemDetail,setItemDetail] = useState<Item>()
+
   useEffect(()=>{
       item.get<Item>(APIS.GET_ITEM+item_id)
       .then((response)=>{
         console.log(response.data)
         setItemDetail(response.data)
       })
-  },[item_id])
+
+  },[item_id]);
+
+
+  if (ItemDetail === undefined) return (<></>);
+
   return (
-    <div
-      className="vh-100"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <NavBar />
+   
       <Container style={{ flex: 1 }} className="m-0 p-0">
         <Row> 
           <Col sm={3}>
@@ -44,6 +42,7 @@ export default function ItemDetail() {
                   chartWidth={1040}
                   highest={33288}
                   lowest={384}
+                  item_name={ItemDetail.name}
                 />
                 <OrderForm
                   item={ItemDetail}
@@ -60,7 +59,6 @@ export default function ItemDetail() {
           notification={notification}
         />
       </Container>
-      <Footer />
-    </div>
+
   );
 }

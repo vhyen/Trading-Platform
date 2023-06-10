@@ -6,11 +6,10 @@ interface OwnedItem {
     name: string,
     icon?: string,
     amount?: number,
-    
 }
 
 
-export default function ItemInfo({item} : {item: any}) {
+export default function ItemInfo({item, icon} : any) {
     return (
             <Row 
             className="g-0 py-3" 
@@ -25,7 +24,7 @@ export default function ItemInfo({item} : {item: any}) {
             >
                 <Col md={3}>
                     <Img 
-                        src={item.icon}
+                        src={icon}
                         className="img-fluid rounded-start" 
                         alt="Item Image"
                     />
@@ -34,14 +33,14 @@ export default function ItemInfo({item} : {item: any}) {
                     
                         <Row className='mx-0 h-100'>
                             <Col className='d-flex align-content-between flex-wrap flex-column'>
-                            <Card.Title className='mb-1'>{item.name}</Card.Title>
-                            <p className="mb-0 text-body-secondary small">${item.currentPrice}</p>
+                            <Card.Title className='mb-1'>{item.item.name}</Card.Title>
+                            <p className="mb-0 text-body-secondary small">${item.item.current_price}</p>
                             </Col>
                             <Col style={{
                                 textAlign: 'end',
                             }}>
-                            <Card.Title className='mb-1'>{item.amount}</Card.Title>
-                            <p className="mb-0 text-body-secondary small">${item.total}</p>       
+                            <Card.Title className='mb-1'>{item.quantity}</Card.Title>
+                            <p className="mb-0 text-body-secondary small">${item.quantity * item.item.current_price}</p>       
                             </Col>
                         </Row>
                    
