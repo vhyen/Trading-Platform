@@ -71,6 +71,18 @@ interface Transaction {
   created_at: string,
 }
 
+
+interface ICandle {
+  name: string,
+  date: string,
+  closest_space: number,
+  highest: number,
+  lowest: number,
+  open: number,
+  close: number,
+}
+
+
 export type {
   Account,
   AccountDetail,
@@ -81,4 +93,5 @@ export type {
   Pagination,
   Notification,
   Record,
+  ICandle
 };

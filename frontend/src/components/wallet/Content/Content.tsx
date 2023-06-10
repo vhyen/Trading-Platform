@@ -2,10 +2,10 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
 import ListOfItems from "./ListOfItems";
 import OwnedTransactions from "./OwnedTransactions";
+import { AccountDetail } from "../../../constants/types";
 
-const Content = ({data}:any) => {
+const Content = ({data}:{data: AccountDetail | undefined}) => {
   const tabs = ["Items", "Transactions"];
-
   return (
     <Box
       as="main"
@@ -41,7 +41,7 @@ const Content = ({data}:any) => {
 
         <TabPanels px={3} mt={5}>
           <TabPanel>
-            <ListOfItems />
+            <ListOfItems items={data?.owned_item} />
           </TabPanel>
           <TabPanel>
             <OwnedTransactions transactions={data?.transaction}/>

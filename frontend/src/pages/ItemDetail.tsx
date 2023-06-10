@@ -14,14 +14,18 @@ export default function ItemDetail() {
   const [show, setShow] = useState(false);
   const [notification, setNotification] = useState<Notification>();
   const [ItemDetail,setItemDetail] = useState<Item>()
+
   useEffect(()=>{
       item.get<Item>(APIS.GET_ITEM+item_id)
       .then((response)=>{
         console.log(response.data)
         setItemDetail(response.data)
       })
+
   },[item_id]);
 
+
+  if (ItemDetail === undefined) return (<></>);
 
   return (
    
@@ -38,6 +42,7 @@ export default function ItemDetail() {
                   chartWidth={1040}
                   highest={33288}
                   lowest={384}
+                  item_name={ItemDetail.name}
                 />
                 <OrderForm
                   item={ItemDetail}
